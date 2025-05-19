@@ -1,0 +1,14 @@
+{
+  "devDependencies": {
+    "@playwright/test": "^1.51.1"
+  },
+  "dependencies": {
+    "googleapis": "^148.0.0"
+  },
+    "scripts": {
+      "test:enrollment:all": "npx playwright test --config playwright.config.js",
+      "test:enrollment:1": "\"npx playwright test --project=1-newenrollment --config=playwright.config.js\"",
+      "test:enrollment:2": "\"npx playwright test --project=2-existingstudent --config=playwright.config.js\"",
+      "test:enrollment:3": "\"npx playwright test --project=3-start-new --config=playwright.config.js\""
+    }
+}
