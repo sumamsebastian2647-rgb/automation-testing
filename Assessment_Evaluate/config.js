@@ -6,7 +6,7 @@ const config = {
       password: 'Rto@2024$',
     },
     assessment_code:{
-      AQcode:'AQ01_auto',
+      AQcode:'AQ08_auto',
       LQcode:'LQ06_auto',
       HQcode:'HQ01_auto',
       PQcode:'PQ01_auto',
@@ -14,7 +14,7 @@ const config = {
 
     },
     assessment_name:{
-      AQname:'Assess_01_AQ_Auto',
+      AQname:'Assess_08_AQ_Auto',
       LQname:'Assess_06_LQ_Auto',
       HQname:'Assess_01_HQ_Auto',
       PQname:'Assess_01_PQ_Auto',
@@ -34,6 +34,90 @@ const config = {
       file1:'Volcano_Eruption_Long_Essay.pdf',
       
     },
+   selectors: {
+        editor: '.redactor-editor',
+        correctFeedback: '.col-md-6 > .form-group > .redactor-box > .redactor-editor',
+        wrongFeedback: 'div:nth-child(2) > .form-group > .redactor-box > .redactor-editor',
+        answerField: 'div:nth-child(5) > .col-md-12 > .form-group > .redactor-box > .redactor-editor',
+        smartFillAnswer: 'div:nth-child(6) > .col-md-12 > .form-group > .redactor-box > .redactor-editor',
+        fillInBlankAnswer: 'div:nth-child(6) > .col-md-12 > .form-group > .redactor-box > .redactor-editor',
+        dragDropAnswer: 'div:nth-child(6) > .col-md-12 > .form-group > .redactor-box > .redactor-editor',
+        shortAnswerInput: '#txtAnswer0',
+        matchingText: '.form-group > .form-group > .redactor-box > .redactor-editor',
+        matchingAnswer: 'Answer*',
+        matchingSave: '#matching-form',
+        saveButton: 'Save',
+        addNewQuestion: 'Add New Question ',
+        multipleChoiceAnswer: 'textarea[name="QuestionMultipleChoiceAnswer\$$answer\$$\$$new\$$\$$${i}\$$"]'
+    },
+    timeouts: {
+        defaultWait: 2000
+    },
+    testData: {
+        questionSequence: [
+            'MultipleChoice',
+            'ShortAnswer',
+            'FillInBlank',
+            'SmartFillInBlank',
+            'TrueFalse',
+            'Matching',
+            'DragAndDrop'
+        ],
+        questions: {
+            multipleChoice: {
+                type: 'Multiple choice',
+                question: 'fff',
+                correctFeedback: 'Correct',
+                wrongFeedback: 'Wrong',
+                answer: 'eeee',
+                options1:'eeee',
+                option2:'ffff',
+            },
+            shortAnswer: {
+                type: 'Short Answer Question',
+                question: '2+2',
+                correctFeedback: 'Correct',
+                wrongFeedback: 'Wrong',
+                answer: '4'
+            },
+            fillInBlank: {
+                type: 'Fill in the blank',
+                question: 'sun rises in [east]',
+                correctFeedback: 'Correct',
+                wrongFeedback: 'Wrong',
+                answer: 'east'
+            },
+            smartFillInBlank: {
+                type: 'Smart fill in the blank',
+                question: 'Venice of east is #Alapuzha#',
+                correctFeedback: 'Correct',
+                wrongFeedback: 'Wrong',
+                answer: 'Alapuzha'
+            },
+            trueFalse: {
+                type: 'True False',
+                question: 'sun set in west',
+                correctFeedback: 'Correct',
+                wrongFeedback: 'Wrong',
+                answer: 'West'
+            },
+            matching: {
+                type: 'Matching',
+                question: '4+4',
+                correctFeedback: 'Correct',
+                wrongFeedback: 'Wrong',
+                matchingText: '4+4',
+                answer: '8'
+            },
+            dragAndDrop: {
+                type: 'Drag & Drop',
+                question: 'SUN RISES in#east#',
+                correctFeedback: 'correct',
+                wrongFeedback: 'wrong',
+                answer: 'east'
+            }
+        }
+    }
 };
 
 module.exports = config;  // Direct export, not as default

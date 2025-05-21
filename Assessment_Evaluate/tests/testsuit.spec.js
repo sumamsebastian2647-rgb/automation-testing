@@ -40,7 +40,8 @@ test.describe('Assessment Creation Suite', () => {
                 name: config.assessment_name.AQname,
                 description: config.assessment_instr.instrcution
             });
-        } catch (error) {
+            await assessmentPage.createQuestion()
+            } catch (error) {
             console.error('Test failed:', error);
             if (page && !page.isClosed()) {
                 await page.screenshot({ path: `test-failure-${Date.now()}.png` });
