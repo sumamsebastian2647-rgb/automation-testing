@@ -29,7 +29,7 @@ test.describe('Assessment Creation Suite', () => {
             }
             throw error;
         }
-    });*/
+    });
    test('Create Automatic Assessment', async ({ page }) => {
         try {
             const loginPage = new LoginPage(page);
@@ -50,16 +50,17 @@ test.describe('Assessment Creation Suite', () => {
         }
     });
    
-    /*test('Create Hybrid Answer Assessment', async ({ page }) => {
+    test('Create Hybrid Answer Assessment', async ({ page }) => {
         try {
             const loginPage = new LoginPage(page);
             await loginPage.login(config.credentials.username, config.credentials.password);
             const assessmentPage = new AssessmentPageHQ(page);
             await assessmentPage.createNewAssessment({
-                code: config.assessment_code.HQcode,
-                name: config.assessment_name.HQname,
-                description: config.assessment_instr.instrcution
-            });
+            code: config.assessment_code.HQcode,
+            name: config.assessment_name.HQname,
+            description: config.assessment_instr.instrcution
+        });
+     await assessmentPage.createQuestion()
         } catch (error) {
             console.error('Test failed:', error);
             if (page && !page.isClosed()) {
@@ -67,7 +68,7 @@ test.describe('Assessment Creation Suite', () => {
             }
             throw error;
         }
-    });
+    });*/
      test('Create Practical Answer Assessment', async ({ page }) => {
         try {
             const loginPage = new LoginPage(page);
@@ -77,7 +78,9 @@ test.describe('Assessment Creation Suite', () => {
                 code: config.assessment_code.PQcode,
                 name: config.assessment_name.PQname,
                 description: config.assessment_instr.instrcution
+                
             });
+              await assessmentPage.createQuestion()
         } catch (error) {
             console.error('Test failed:', error);
             if (page && !page.isClosed()) {
@@ -86,7 +89,7 @@ test.describe('Assessment Creation Suite', () => {
             throw error;
         }
     });
-    test('Create SCROM Assessment', async ({ page }) => {
+   /* test('Create SCROM Assessment', async ({ page }) => {
         try {
             const loginPage = new LoginPage(page);
             await loginPage.login(config.credentials.username, config.credentials.password);

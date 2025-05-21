@@ -46,10 +46,11 @@ class AssessmentPage {
     async createQuestion() {
      try {
             // Navigate to questions management
-           // await this.page.getByRole('link', { name: 'Manage Questions' }).click();
-           await this.page.locator('a[title="Manage Questions"]').first().click();
+           await this.page.getByRole('link', { name: 'Manage Questions' }).click();
+           //await this.page.locator('a[title="Manage Questions"]').first().click();
                         // Create all types of questions
             await this.questionsPage.createAllQuestions();
+            await this.page.locator('a.btn-flat.btn-google[href*="manageaqquestions"]').first().click();
             // Return to assessment
            await this.page.locator('a.btn-danger.btn-flat.margin-bottom-half').click();
         } catch (error) {

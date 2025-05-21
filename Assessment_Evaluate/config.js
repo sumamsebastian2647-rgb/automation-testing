@@ -8,16 +8,16 @@ const config = {
     assessment_code:{
       AQcode:'AQ08_auto',
       LQcode:'LQ06_auto',
-      HQcode:'HQ01_auto',
-      PQcode:'PQ01_auto',
+      HQcode:'HQ12_auto',
+      PQcode:'PQ05_auto',
       Scromcode:'SQ01_auto',
 
     },
     assessment_name:{
       AQname:'Assess_08_AQ_Auto',
       LQname:'Assess_06_LQ_Auto',
-      HQname:'Assess_01_HQ_Auto',
-      PQname:'Assess_01_PQ_Auto',
+      HQname:'Assess_12_HQ_Auto',
+      PQname:'Assess_05_PQ_Auto',
       Scromname:'Assess_01_SQ_Auto',
     },
     assessment_instr:{
@@ -117,6 +117,12 @@ const config = {
                 answer: 'east'
             }
         }
+    },
+    paracticalQ:{
+        question:'During the observation, the trainee was required to perform a task related to handling customer inquiries. How effectively did the trainee demonstrate communication skills, problem-solving abilities, and professionalism during the interaction?',
+        answer:'Communication Skills The trainee greeted the customer politely and maintained good eye contact throughout the interaction. They used clear and concise language, avoiding technical jargon. They actively listened to the customer’s concern and asked relevant follow-up questions to clarify the issue.Problem-Solving Abilities:The trainee analyzed the customer’s problem efficiently and referred to the internal knowledge base to provide a solution. When unsure about a specific detail, they consulted a supervisor promptly instead of guessing.Professionalism:The trainee remained calm and respectful, even when the customer expressed frustration. They upheld the company’s values by ensuring the customer felt heard and valued. The trainee followed standard operating procedures and documented the interaction correctly in the system.',
+        testfile:'Practical_Observation_Sample.pdf',
+
     }
 };
 

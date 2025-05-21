@@ -1,7 +1,11 @@
 // AssessmentPage.js
+const config = require("../config");
+const { QuestionsPage } = require('./QuestionsPage'); 
+
 class AssessmentPageHQ {
     constructor(page) {
         this.page = page;
+        this.questionsPage = new QuestionsPage(page);
         this.courseManagementLink = page.getByRole('link', { name: ' Course Management ' });
         this.assessmentsLink = page.getByRole('link', { name: ' Assessments' });
         this.createAssessmentLink = page.getByRole('link', { name: 'Create Assessment' });
@@ -33,12 +37,26 @@ class AssessmentPageHQ {
              // Click the save button in box-footer
             await this.saveButton.click();
             await this.page.waitForLoadState('networkidle');
+            
         } catch (error) {
             console.error('Error creating assessment:', error);
             throw error;
         }
     }
-    async createQuestiont(assessmentData) {
+     async createQuestion() {
+     try {
+            // Navigate to questions management
+            await this.page.getByRole('link', { name: 'Manage Questions' }).click();
+            //await this.page.locator('a[title="Manage Questions"]').first().click();
+                        // Create all types of questions
+            await this.questionsPage.createAllQuestions();
+            await this.page.locator('a.btn-flat.btn-google[href*="managehybridquestions"]').first().click();
+            // Return to assessment
+           await this.page.locator('a.btn-danger.btn-flat.margin-bottom-half').click();
+        } catch (error) {
+            console.error('Error managing questions:', error);
+            throw error;
+        }
     }
       
 }

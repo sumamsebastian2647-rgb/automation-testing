@@ -172,7 +172,6 @@ async createMatchingQuestion() {
             await this.createTrueFalseQuestion();
             await this.createMatchingQuestion();
             await this.createDragAndDropQuestion();
-            await this.page.locator('a.btn-flat.btn-google[href*="manageaqquestions"]').first().click();
             } catch (error) {
             console.error('Error in createAllQuestions:', error);
             throw error;
