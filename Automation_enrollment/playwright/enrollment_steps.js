@@ -189,7 +189,7 @@ async function fillDeclarationAndSignature(page) {
   await page.getByRole('textbox', { name: 'Name *' }).click();
   await page.getByRole('textbox', { name: 'Name *' }).fill('Test Automation');
   await page.getByRole('textbox', { name: 'Date *' }).click();
-  await page.getByRole('link', { name: '5', exact: true }).click();
+  await page.getByRole('link', { name: String(new Date().getDate()), exact: true }).click();
   await page.waitForTimeout(config.timeouts.short);
   await page.getByRole('button', { name: 'Next' }).click();
   await page.waitForTimeout(1000)
@@ -199,7 +199,7 @@ async function completePayment_paid(page) {
   await page.getByText('Paid / Free').click();
   await page.locator('label').filter({ hasText: 'In person' }).getByRole('insertion').click();
   await page.getByRole('textbox', { name: 'Payment date *' }).click();
-  await page.getByRole('link', { name: '5', exact: true }).click();
+  await page.getByRole('link', { name: String(new Date().getDate()), exact: true }).click();
   await page.getByRole('button', { name: 'Submit' }).click();
 }
 async function completePayment_unpaid(page) {
