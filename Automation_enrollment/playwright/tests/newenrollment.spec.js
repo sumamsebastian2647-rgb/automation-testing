@@ -85,9 +85,10 @@ class EnrollmentChecker {
 
         if (hasMessage) {
           console.log('Execution stopped: You have already enrolled in this course');
-          process.exit(0);
+          return true; // Return true instead of process.exit(0)
         }
       }
+      return false;
     } catch (error) {
       return false;
     }
@@ -104,7 +105,11 @@ for (const data of testData) {
       await data.personalDetails(page);
 
       const enrollmentChecker = new EnrollmentChecker(page);
-      await enrollmentChecker.checkAlreadyEnrolled();
+      const alreadyEnrolled = await enrollmentChecker.checkAlreadyEnrolled();
+      if (alreadyEnrolled) {
+        test.skip(); // Skip the test instead of terminating the process
+        return;
+      }
 
       await fillResidentialDetails(page);
       await fillContactInformation(page);

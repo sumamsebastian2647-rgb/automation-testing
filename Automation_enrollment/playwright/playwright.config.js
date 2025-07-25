@@ -24,17 +24,17 @@ module.exports = defineConfig({
   /* Ensure files run in this order via naming */
   projects: [
     {
-      name: '1-newenrollment',
+      name: 'newenrollment',
       testMatch: 'tests/newenrollment.spec.js',
       use: { ...devices['Desktop Chrome'] },
     },
     {
-      name: '2-existingstudent',
+      name: 'existingstudent',
       testMatch: 'tests/existingstudent.spec.js',
       use: { ...devices['Desktop Chrome'] },
     },
     {
-      name: '3-start-new',
+      name: 'start-new',
       testMatch: 'tests/start_new.spec.js',
       use: { ...devices['Desktop Chrome'] },
     },
