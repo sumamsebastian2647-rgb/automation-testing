@@ -1,5 +1,5 @@
 {
-  "name": "assessment_evaluate",
+  "name": "course_forum",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,7 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "@playwright/test": "^1.52.0",
-    "@types/node": "^22.15.17"
+    "@playwright/test": "^1.54.1",
+    "@types/node": "^24.1.0"
   }
 }
