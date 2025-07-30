@@ -4,12 +4,12 @@ pipelines:
   default:
     - step:
         name: Run Playwright Tests for Course_Forum_with_cohort
-        working_directory: Course_Forum_with_cohort
         caches:
           - node
         script:
-          - npm ci
+          - cd Course_Forum_with_cohort
+          - npm install       # or npm ci (if you have package-lock.json)
           - npx playwright install --with-deps
           - npx playwright test
         artifacts:
-          - playwright-report/**
+          - Course_Forum_with_cohort/playwright-report/**
