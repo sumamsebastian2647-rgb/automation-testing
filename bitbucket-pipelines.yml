@@ -1,0 +1,15 @@
+image: mcr.microsoft.com/playwright:v1.39.0-focal
+
+pipelines:
+  default:
+    - step:
+        name: Run Playwright Tests for Course_Forum_with_cohort
+        working_directory: Course_Forum_with_cohort
+        caches:
+          - node
+        script:
+          - npm ci
+          - npx playwright install --with-deps
+          - npx playwright test
+        artifacts:
+          - playwright-report/**
