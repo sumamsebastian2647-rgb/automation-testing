@@ -7,7 +7,7 @@ pipelines:
         caches:
           - node
         script:
-          - cd Course_Forum_with_cohort
+          - cd New_enrollment
           - npm install       # or npm ci (if you have package-lock.json)
           - npx playwright install --with-deps
           - npx playwright test
