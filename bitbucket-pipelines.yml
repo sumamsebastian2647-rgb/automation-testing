@@ -3,7 +3,7 @@ image: mcr.microsoft.com/playwright:v1.39.0-focal
 pipelines:
   default:
     - step:
-        name: Run Playwright Tests for Course_Forum_with_cohort
+        name: Run Playwright Tests for New_enrollment
         caches:
           - node
         script:
@@ -12,4 +12,4 @@ pipelines:
           - npx playwright install --with-deps
           - npx playwright test
         artifacts:
-          - Course_Forum_with_cohort/playwright-report/**
+          - New_enrollment/playwright-report/**
