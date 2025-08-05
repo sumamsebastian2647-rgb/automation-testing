@@ -1,15 +1,41 @@
-image: mcr.microsoft.com/playwright:v1.39.0-focal
+image: mcr.microsoft.com/playwright:v1.44.0-jammy
 
 pipelines:
   default:
     - step:
-        name: Run Playwright Tests for New_enrollment
+        name: Run All Tests
         caches:
           - node
         script:
-          - cd New_enrollment
-          - npm install       # or npm ci (if you have package-lock.json)
+          - npm install
           - npx playwright install --with-deps
-          - npx playwright test
+          - npx playwright test --reporter=html
         artifacts:
-          - New_enrollment/playwright-report/**
+          - playwright-report/**
+
+  custom:
+    course-forum:
+      - step:
+          name: Test Course Forum with Cohort
+          caches:
+            - node
+          script:
+            - cd Course_Forum_with_cohort
+            - npm install
+            - npx playwright install --with-deps
+            - npx playwright test --reporter=html
+          artifacts:
+            - Course_Forum_with_cohort/playwright-report/**
+
+    new-enrollment:
+      - step:
+          name: Test New Enrollment
+          caches:
+            - node
+          script:
+            - cd New_enrollment
+            - npm install
+            - npx playwright install --with-deps
+            - npx playwright test --reporter=html
+          artifacts:
+            - New_enrollment/playwright-report/**
