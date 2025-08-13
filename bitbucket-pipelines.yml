@@ -39,3 +39,29 @@ pipelines:
             - npx playwright test --reporter=html
           artifacts:
             - New_enrollment/playwright-report/**
+    
+    create-admin:
+      - step:
+          name: Test Create Admin
+          caches:
+            - node
+          script:
+            - cd User_Management/UM_Create_Admin
+            - npm install
+            - npx playwright install --with-deps
+            - npx playwright test tests/create_admin.spec.js --reporter=html
+          artifacts:
+            - User_Management/UM_Create_Admin/playwright-report/**
+
+    create-admin-ui:
+      - step:
+          name: Test Create Admin UI
+          caches:
+            - node
+          script:
+            - cd User_Management/UM_Create_Admin
+            - npm install
+            - npx playwright install --with-deps
+            - npx playwright test tests/Create_admin_UI.spec.js --reporter=html
+          artifacts:
+            - User_Management/UM_Create_Admin/playwright-report/**
