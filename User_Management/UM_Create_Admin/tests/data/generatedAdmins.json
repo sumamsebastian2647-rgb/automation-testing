@@ -1,0 +1,38 @@
+{
+  "Course Admin": {
+    "firstName": "TU_CA_6002508130841",
+    "lastName": "Auto",
+    "username": "tu_CA_6002508130841",
+    "email": "tu_6002508130841@maininator.com",
+    "jobRole": "Course Admin",
+    "phone": "0412131212",
+    "city": "Sydney"
+  },
+  "RTO Manager": {
+    "firstName": "TU_RM_5212508130841",
+    "lastName": "Auto",
+    "username": "tu_RM_5212508130841",
+    "email": "tu_5212508130841@maininator.com",
+    "jobRole": "RTO Manager",
+    "phone": "0412131212",
+    "city": "Sydney"
+  },
+  "Sales Manager": {
+    "firstName": "TU_SM_1092508130841",
+    "lastName": "Auto",
+    "username": "tu_SM_1092508130841",
+    "email": "tu_1092508130841@maininator.com",
+    "jobRole": "Sales Manager",
+    "phone": "0412131212",
+    "city": "Sydney"
+  },
+  "Student Manager": {
+    "firstName": "TU_SM_9782508130841",
+    "lastName": "Auto",
+    "username": "tu_SM_9782508130841",
+    "email": "tu_9782508130841@maininator.com",
+    "jobRole": "Student Manager",
+    "phone": "0412131212",
+    "city": "Sydney"
+  }
+}
