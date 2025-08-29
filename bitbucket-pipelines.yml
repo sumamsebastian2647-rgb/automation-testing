@@ -14,6 +14,7 @@ pipelines:
           - playwright-report/**
 
   custom:
+    # ---- Existing Custom Pipelines ----
     course-forum:
       - step:
           name: Test Course Forum with Cohort
@@ -65,3 +66,87 @@ pipelines:
             - npx playwright test tests/Create_admin_UI.spec.js --reporter=html
           artifacts:
             - User_Management/UM_Create_Admin/playwright-report/**
+
+    # ---- NEW: Course Induction Tests ----
+    course-induction-all:
+      - step:
+          name: Run Course Induction Tests (All in Order)
+          caches:
+            - node
+          script:
+            - cd Course_Induction
+            - npm install
+            - npx playwright install --with-deps
+            - echo "✅ Running Course Induction in order..."
+            - npx playwright test tests/createcourse_induction.spec.js --reporter=html
+            - npx playwright test tests/add_task.spec.js --reporter=html
+            - npx playwright test tests/link_to_course.spec.js --reporter=html
+            - npx playwright test tests/submit_induction.spec.js --reporter=html
+            - npx playwright test tests/review_induction.spec.js --reporter=html
+          artifacts:
+            - Course_Induction/playwright-report/**
+
+    course-induction-createcourse:
+      - step:
+          name: Run Create Course Induction
+          caches:
+            - node
+          script:
+            - cd Course_Induction
+            - npm install
+            - npx playwright install --with-deps
+            - npx playwright test tests/createcourse_induction.spec.js --reporter=html
+          artifacts:
+            - Course_Induction/playwright-report/**
+
+    course-induction-addtask:
+      - step:
+          name: Run Add Task Test
+          caches:
+            - node
+          script:
+            - cd Course_Induction
+            - npm install
+            - npx playwright install --with-deps
+            - npx playwright test tests/add_task.spec.js --reporter=html
+          artifacts:
+            - Course_Induction/playwright-report/**
+
+    course-induction-linkcourse:
+      - step:
+          name: Run Link Course Test
+          caches:
+            - node
+          script:
+            - cd Course_Induction
+            - npm install
+            - npx playwright install --with-deps
+            - npx playwright test tests/link_to_course.spec.js --reporter=html
+          artifacts:
+            - Course_Induction/playwright-report/**
+
+    course-induction-submit:
+      - step:
+          name: Run Submit Induction Test
+          caches:
+            - node
+          script:
+            - cd Course_Induction
+            - npm install
+            - npx playwright install --with-deps
+            - npx playwright test tests/submit_induction.spec.js --reporter=html
+          artifacts:
+            - Course_Induction/playwright-report/**
+
+    course-induction-review:
+      - step:
+          name: Run Review Induction Test
+          caches:
+            - node
+          script:
+            - cd Course_Induction
+            - npm install
+            - npx playwright install --with-deps
+            - npx playwright test tests/review_induction.spec.js --reporter=html
+          artifacts:
+            - Course_Induction/playwright-report/**
