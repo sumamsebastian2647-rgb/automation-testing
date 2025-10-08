@@ -15,7 +15,11 @@ test('Student permission', async ({ page }) => {
   await loginPage.goto();
   await loginPage.login(config.credentials.username, config.credentials.password);
   await studentManagementPage.openUserManagement();
-await studentManagementPage.searchByFirstname(config.testSM.testuser);
+    await studentManagementPage.searchByFirstName(config.testSM.testuser);
+
+  // Step 4: Verify first row has Jane Angel | Student Manager
+  await studentManagementPage.verifyFirstRow(config.testSM.testuser, 'Student Manager');
+
  await studentManagementPage.setPermissionsFunction();
   await page.waitForTimeout(2000); 
   await studentManagementPage.setPermissionsCoure();
