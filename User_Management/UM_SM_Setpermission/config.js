@@ -25,7 +25,7 @@ module.exports = {
     country: 'Australia',
   },
   testSM:{
-    testuser:'Jane',
+    testuser:'Jane Angel',
   },
   messages: {
     successMessage: 'Admin created successfully',

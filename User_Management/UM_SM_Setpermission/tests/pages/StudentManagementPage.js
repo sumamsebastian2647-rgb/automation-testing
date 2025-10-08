@@ -12,13 +12,16 @@ class StudentManagementPage {
     this.studentManagerCell = page.getByRole('cell', { name: 'Student Manager' });
      this.setPermissionLink = page.locator('a[title="Set Permissions"]');
        this.confirmLoginAsStudent =page.locator('a[title="Login as User"]');
+        this.firstNameInput = page.locator('input[name="UserByRtoSearch[ubr_firstname]"]');
+    this.firstRowName = page.locator('table tbody tr:first-child td:nth-child(2)'); // Adjust index if needed
+    this.firstRowRole = page.locator('table tbody tr:first-child td:nth-child(6)'); // Adjust based on actual table
    
     // Permissions
     this.studentCompetencyReport = page.locator('label').filter({ hasText: 'Student Competencies Report' }).getByRole('insertion');
     this.permissionsSaveButton = page.locator('form').filter({ hasText: 'Permissions Login as Student' }).getByRole('button');
     this.courseCheckbox = page.locator('label').filter({ hasText: '- Course_Sample_01' }).getByRole('insertion');
     this.courseSaveButton = page.locator('form').filter({ hasText: 'Courses 0001 -' }).getByRole('button');
-  
+     this.firstNameSearch = page.locator('input[name="UserByRtoSearch[ubr_firstname]"]');
     // Reports
     this.studentReportsLink = page.getByRole('link', { name: ' Student Reports ' });
     this.competencyReportLink = page.getByRole('link', { name: ' Competency Report' });
@@ -39,13 +42,32 @@ class StudentManagementPage {
   async openUserManagement() {
     await this.userManagementLink.click();
   }
-  async searchByFirstname(name) {
-    await this.firstnameInput.fill(name).click;
-      // Table auto-updates, no Enter or Search button needed
-   await this.page.waitForSelector(`table tbody tr:has-text("${name}")`);
-   await this.studentManagerCell.click();
-  }
  
+ async searchByFirstName(name) {
+  // Clear the input first
+  await this.firstNameInput.fill('');
+  // Type the name
+  await this.firstNameInput.fill(name);
+  // Press Enter to trigger search
+  await this.firstNameInput.press('Enter');
+  // Wait for the grid to refresh
+  await this.page.waitForTimeout(1000);
+
+  // Optional: verify first row contains the searched name
+  const firstRowText = (await this.firstRowName.innerText()).trim();
+  if (!firstRowText.includes(name)) {
+    throw new Error(`Search failed: expected first row to contain "${name}", but got "${firstRowText}"`);
+  }
+}
+
+  async verifyFirstRow(name, role) {
+    const actualName = (await this.firstRowName.innerText()).trim();
+    const actualRole = (await this.firstRowRole.innerText()).trim();
+
+    await expect(actualName).toBe(name);
+    await expect(actualRole).toBe(role);
+  }
+
   // -------- Permissions --------
   async setPermissionsFunction() {
     await this.setPermissionLink.click();
@@ -72,7 +94,7 @@ class StudentManagementPage {
   }
    
     async loginAsStudent(name) {
-        await this.searchByFirstname(name);
+        await this.searchByFirstName(name);
         await this.confirmLoginAsStudent.first().click();
         const toastLocator = this.page.locator(`text=Well Done! You are now logged in as Jane Angel.`);
         try {
