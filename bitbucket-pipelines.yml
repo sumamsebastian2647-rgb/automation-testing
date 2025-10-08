@@ -140,6 +140,23 @@ pipelines:
           artifacts:
             - User_Management/UM_Dashboard_UI/playwright-report/**
 
+    # -------UM Export Tests  ------
+    um-export-all:
+      - step:
+          name: Run UM_Export Tests (All in Order)
+          caches:
+            - node
+          script:
+            - cd automation-testing/User_Management/UM_Export
+            - npm install
+            - npx playwright install --with-deps
+            - echo "✅ Running UM_Export tests in order..."
+            - npx playwright test tests/export.spec.js --reporter=html
+            - npx playwright test tests/grid_reset.spec.js --reporter=html
+            - npx playwright test tests/pagination.spec.js --reporter=html
+            - npx playwright test tests/reorder_column.spec.js --reporter=html
+          artifacts:
+            - automation-testing/User_Management/UM_Export/playwright-report/**
 
     # ---- NEW: Course Induction Tests ----
     course-induction-all:
