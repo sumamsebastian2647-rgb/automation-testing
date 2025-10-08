@@ -102,12 +102,12 @@ pipelines:
           caches:
             - node
           script:
-            - cd automation-testing/User_Management/UM_SM_Setpermission
+            - cd User_Management/UM_SM_Setpermission
             - npm install
             - npx playwright install --with-deps
             - npx playwright test tests/studentPermissions.spec.js --reporter=html
           artifacts:
-            - automation-testing/User_Management/UM_SM_Setpermission/playwright-report/**
+            - User_Management/UM_SM_Setpermission/playwright-report/**
  
 
     # ---- NEW: Course Induction Tests ----
