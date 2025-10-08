@@ -109,22 +109,22 @@ pipelines:
           artifacts:
             - User_Management/UM_SM_Setpermission/playwright-report/**
 
-   #-----------Active inactive Test---------------------
-   um-active-inactive-admin:
-    - step:
-      name: Run UM Active/Inactive Admin Tests
-      caches:
-        - node
-      script:
-        - cd User_Management/UM_Active_Inactive_Admin
-        - npm install
-        - npx playwright install --with-deps
-        - echo "✅ Running Active/Inactive Admin test..."
-        - npx playwright test tests/activate_inactivate.spec.js --reporter=html
-      artifacts:
-        - User_Management/UM_Active_Inactive_Admin/playwright-report/**
+    #-----------Active inactive Test---------------------
+    um-active-inactive-admin:
+      - step:
+          name: Run UM Active/Inactive Admin Tests
+          caches:
+            - node
+          script:
+            - cd User_Management/UM_Active_Inactive_Admin
+            - npm install
+            - npx playwright install --with-deps
+            - echo "✅ Running Active/Inactive Admin test..."
+            - npx playwright test tests/activate_inactivate.spec.js --reporter=html
+          artifacts:
+            - User_Management/UM_Active_Inactive_Admin/playwright-report/**
 
-   # -------Dashboard UI  ------
+    # -------Dashboard UI  ------
     dashboard-ui-all:
       - step:
           name: Run Dashboard UI Tests (All in Order)
