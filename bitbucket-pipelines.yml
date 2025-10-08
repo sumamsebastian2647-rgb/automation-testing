@@ -108,7 +108,22 @@ pipelines:
             - npx playwright test tests/studentPermissions.spec.js --reporter=html
           artifacts:
             - User_Management/UM_SM_Setpermission/playwright-report/**
- 
+   # -------Dashboard UI  ------
+    dashboard-ui-all:
+      - step:
+          name: Run Dashboard UI Tests (All in Order)
+          caches:
+            - node
+          script:
+            - cd automation-teUser_Management/UM_Dashboard_UI
+            - npm install
+            - npx playwright install --with-deps
+            - echo "✅ Running Dashboard UI tests in order..."
+            - npx playwright test tests/dashboard.spec.js --reporter=html
+            - npx playwright test tests/sorting.spec.js --reporter=html
+          artifacts:
+            - automation-testing/User_Management/UM_Dashboard_UI/playwright-report/**
+
 
     # ---- NEW: Course Induction Tests ----
     course-induction-all:
