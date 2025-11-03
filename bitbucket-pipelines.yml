@@ -245,7 +245,7 @@ pipelines:
     # ---- Trainer Management Create Trainer Tests (Combined) ----
     tm-create-trainer-all:
       - step:
-          name: Run Trainer Management Create Trainer & UI Tests
+          name: Run TM Dashboard Create Trainer & UI 
           caches:
             - node
           script:
@@ -263,7 +263,7 @@ pipelines:
   # ---- Trainer Management Dashboard Tests ----
     tm-dashboard:
       - step:
-          name: Run Trainer Management Dashboard Tests
+          name: Run TM Dashboard Action_icons
           caches:
             - node
           script:
@@ -280,7 +280,7 @@ pipelines:
 # ---- Trainer Management Dashboard UI Validation Tests (Combined) ----
     tm-dashboard-ui-all:
       - step:
-          name: Run Trainer Management Dashboard UI Validation Tests
+          name: Run TM Dashboar Dashboard UI Validation 
           caches:
             - node
           script:
@@ -301,7 +301,7 @@ pipelines:
 # ---- Trainer Management: Active/Inactive UI Tests ----
     trainer-management-active-inactive-ui:
       - step:
-          name: Run Trainer Management Active/Inactive UI Tests
+          name: Run TM Dashboard Active/Inactive Action
           caches:
             - node
           script:
@@ -316,7 +316,7 @@ pipelines:
 # ---- Trainer Management: Export UI Tests ----
     trainer-management-export-ui:
       - step:
-          name: Run Trainer Management Export UI Tests
+          name: Run Trainer Management Grid function
           caches:
             - node
           script:
