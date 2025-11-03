@@ -241,3 +241,54 @@ pipelines:
             - npx playwright test tests/review_induction.spec.js --reporter=html
           artifacts:
             - Course_Induction/playwright-report/**
+     # ---- Trainer Management Create Trainer Tests (Combined) ----
+    tm-create-trainer-all:
+      - step:
+          name: Run Trainer Management Create Trainer & UI Tests
+          caches:
+            - node
+          script:
+            - cd automation-testing/Trainer_Management/TM_CreateTrainer
+            - npm install
+            - npx playwright install --with-deps
+            - echo "✅ Running Trainer Management Create Trainer tests..."
+            # Run both spec files together
+            - npx playwright test tests/createTrainer.spec.js --reporter=html
+            - npx playwright test tests/createtrainer_UI.spec.js --reporter=html
+          artifacts:
+            - automation-testing/Trainer_Management/TM_CreateTrainer/playwright-report/**
+    # ---- Trainer Management Dashboard Tests ----
+    tm-dashboard:
+      - step:
+          name: Run Trainer Management Dashboard Tests
+          caches:
+            - node
+          script:
+            - cd automation-testing/Trainer_Management/TM_Dashboard-action
+            - npm install
+            - npx playwright install --with-deps
+            - echo "✅ Running Trainer Management Dashboard tests..."
+            - npx playwright test tests/loginas_trainer.spec.js --reporter=html
+            - npx playwright test tests/view.spec.js --reporter=html
+          artifacts:
+            - automation-testing/Trainer_Management/TM_Dashboard-action/playwright-report/**
+    # ---- Trainer Management Dashboard UI Validation Tests (Combined) ----
+    tm-dashboard-ui-all:
+      - step:
+          name: Run Trainer Management Dashboard UI Validation Tests
+          caches:
+            - node
+          script:
+            - cd automation-testing/Trainer_Management/TM_Dashboard
+            - npm install
+            - npx playwright install --with-deps
+            - echo "✅ Running Trainer Dashboard UI validation tests..."
+            # Run all related UI validation spec files together
+            - npx playwright test tests/UI_Search_Name.spec.js \
+                tests/UI_Search_Username_Email.spec.js \
+                tests/button.spec.js \
+                tests/sorting.spec.js \
+                tests/tooltip.spec.js \
+                --reporter=html
+          artifacts:
+            - automation-testing/Trainer_Management/TM_Dashboard/playwright-report/**
