@@ -299,7 +299,7 @@ pipelines:
           caches:
             - node
           script:
-            - cd automation-testing/Trainer_Management/TM_EXPORT
+            - cd automation-testing/Trainer_Management/TM_Export
             - npm install
             - npx playwright install --with-deps
             - echo "✅ Running Trainer Management Export UI tests..."
@@ -310,4 +310,18 @@ pipelines:
                 --reporter=html
           artifacts:
             - automation-testing/Trainer_Management/TM_Export/playwright-report/**
+      # ---- Trainer Management: Active/Inactive UI Tests ----
+    trainer-management-active-inactive-ui:
+      - step:
+          name: Run Trainer Management Active/Inactive UI Tests
+          caches:
+            - node
+          script:
+            - cd automation-testing/Trainer_Management/TM_Active_Inactive
+            - npm install
+            - npx playwright install --with-deps
+            - echo "✅ Running Trainer Management Active/Inactive UI tests..."
+            - npx playwright test tests/activate_inactivate.spec.js --reporter=html
+          artifacts:
+            - automation-testing/Trainer_Management/TM_Active_Inactive/**/playwright-report/**
 
