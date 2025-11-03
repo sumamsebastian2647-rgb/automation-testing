@@ -292,3 +292,22 @@ pipelines:
                 --reporter=html
           artifacts:
             - automation-testing/Trainer_Management/TM_Dashboard/playwright-report/**
+     # ---- Trainer Management: Export UI Tests ----
+    trainer-management-export-ui:
+      - step:
+          name: Run Trainer Management Export UI Tests
+          caches:
+            - node
+          script:
+            - cd automation-testing/Trainer_Management/TM_EXPORT
+            - npm install
+            - npx playwright install --with-deps
+            - echo "✅ Running Trainer Management Export UI tests..."
+            - npx playwright test tests/export_active.spec.js \
+                TM_Export/tests/grid_reset.spec.js \
+                TM_Export/tests/pagination.spec.js \
+                TM_Export/tests/reorder_column.spec.js \
+                --reporter=html
+          artifacts:
+            - automation-testing/Trainer_Management/TM_Export/playwright-report/**
+
