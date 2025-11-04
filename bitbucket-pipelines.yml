@@ -243,7 +243,7 @@ pipelines:
             - Course_Induction/playwright-report/**
     
     # ---- Trainer Management Create Trainer Tests (Combined) ----
-    tm-create-trainer-all:
+    TM Dashboard Create Trainer & UI :
       - step:
           name: Run TM Dashboard Create Trainer & UI 
           caches:
@@ -261,7 +261,7 @@ pipelines:
             - Trainer_Management/TM_CreateTrainer/playwright-report/**  
 
   # ---- Trainer Management Dashboard Tests ----
-    tm-dashboard:
+    TM Dashboard Action_icons:
       - step:
           name: Run TM Dashboard Action_icons
           caches:
@@ -278,7 +278,7 @@ pipelines:
             - Trainer_Management/TM_Dashboard-action/playwright-report/**
 
 # ---- Trainer Management Dashboard UI Validation Tests (Combined) ----
-    tm-dashboard-ui-all:
+    TM Dashboar Dashboard UI Validation:
       - step:
           name: Run TM Dashboar Dashboard UI Validation 
           caches:
@@ -299,7 +299,7 @@ pipelines:
             - Trainer_Management/TM_Dashboard/playwright-report/**
 
 # ---- Trainer Management: Active/Inactive UI Tests ----
-    trainer-management-active-inactive-ui:
+    TM Dashboard Active/Inactive Action:
       - step:
           name: Run TM Dashboard Active/Inactive Action
           caches:
@@ -314,13 +314,13 @@ pipelines:
             - Trainer_Management/TM_Active_Inactive/playwright-report/**
 
 # ---- Trainer Management: Export UI Tests ----
-    trainer-management-export-ui:
+    TM Grid function:
       - step:
           name: Run TM Grid function
           caches:
             - node
           script:
-            - cd TM/TM_Export
+            - cd Trainer_Management/TM_Export
             - npm install
             - npx playwright install --with-deps
             - echo "✅ Running Trainer Management Export UI tests..."
@@ -332,7 +332,7 @@ pipelines:
           artifacts:
             - Trainer_Management/TM_Export/playwright-report/**
 # ---- Trainer Management: Inactive Dashboard UI Tests ----
-    trainer-management-inactive-dashboard-ui:
+    TM Inactive Dashboard UI :
       - step:
           name: Run TM Inactive Dashboard UI 
           caches:
@@ -352,7 +352,7 @@ pipelines:
             - Trainer_Management/TM_Inactive_Dashboard/playwright-report/**
 
   # ---- Trainer Management: Update Trainer Tests ----
-    trainer-management-update-trainer:
+    TM Update Trainer :
       - step:
           name: Run TM Update Trainer 
           caches:
