@@ -316,7 +316,7 @@ pipelines:
 # ---- Trainer Management: Export UI Tests ----
     trainer-management-export-ui:
       - step:
-          name: Run Trainer Management Grid function
+          name: Run TM Grid function
           caches:
             - node
           script:
@@ -351,3 +351,23 @@ pipelines:
           artifacts:
             - Trainer_Management/TM_Inactive_Dashboard/playwright-report/**
 
+  # ---- Trainer Management: Update Trainer Tests ----
+    trainer-management-update-trainer:
+      - step:
+          name: Run TM Update Trainer 
+          caches:
+            - node
+          script:
+            - cd Trainer_Management/TM_UpdateTrainer
+            - npm install
+            - npx playwright install --with-deps
+            - echo "✅ Running Trainer Management Update Trainer tests..."
+            - npx playwright test tests/Personal_update.spec.js \
+                tests/Qualification_AED.spec.js \
+                tests/WorkEX_AED.spec.js \
+                tests/Trainer_AED.spec.js \
+                tests/PD_AED.spec.js \
+                tests/OD_AED.spec.js \
+                --reporter=html
+          artifacts:
+            - Trainer_Management/TM_UpdateTrainer/playwright-report/**
