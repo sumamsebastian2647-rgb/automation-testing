@@ -254,9 +254,9 @@ pipelines:
             - npx playwright install --with-deps
             - echo "✅ Running Trainer Management Create Trainer tests..."
             # Run both spec files together
-            - npx playwright test tests/createTrainer.spec.js \
-                tests/createtrainer_UI.spec.js \
-                --reporter=html
+            - npx playwright test tests/createTrainer.spec.js --reporter=html
+            - npx playwright test tests/createtrainer_UI.spec.js --reporter=html
+                
           artifacts:
             - Trainer_Management/TM_CreateTrainer/playwright-report/**  
 
@@ -271,9 +271,9 @@ pipelines:
             - npm install
             - npx playwright install --with-deps
             - echo "✅ Running Trainer Management Dashboard tests..."
-            - npx playwright test tests/loginas_trainer.spec.js \
-                tests/view.spec.js \
-                --reporter=html
+            - npx playwright test tests/loginas_trainer.spec.js --reporter=html
+            - npx playwright test tests/view.spec.js  --reporter=html
+               
           artifacts:
             - Trainer_Management/TM_Dashboard-action/playwright-report/**
 
@@ -289,12 +289,12 @@ pipelines:
             - npx playwright install --with-deps
             - echo "✅ Running Trainer Dashboard UI validation tests..."
             # Run all related UI validation spec files together
-            - npx playwright test tests/UI_Search_Name.spec.js \
-               - npx playwright test tests/UI_Search_Username_Email.spec.js \
-                tests/button.spec.js \
-                tests/sorting.spec.js \
-                tests/tooltip.spec.js \
-                --reporter=html
+            - npx playwright test tests/UI_Search_Name.spec.js --reporter=html
+            - npx playwright test tests/UI_Search_Username_Email.spec.js  --reporter=html
+            - npx playwright test tests/button.spec.js --reporter=html
+            - npx playwright test tests/sorting.spec.js  --reporter=html
+            - npx playwright test tests/tooltip.spec.js  --reporter=html
+               
           artifacts:
             - Trainer_Management/TM_Dashboard/playwright-report/**
 
@@ -327,7 +327,7 @@ pipelines:
             - npx playwright test tests/export_active.spec.js --reporter=html
             - npx playwright test tests/grid_reset.spec.js --reporter=html
             - npx playwright test tests/pagination.spec.js --reporter=html
-            - npx playwright test  tests/reorder_column.spec.js --reporter=html
+            - npx playwright test tests/reorder_column.spec.js --reporter=html
                 
           artifacts:
             - Trainer_Management/TM_Export/playwright-report/**
@@ -363,11 +363,11 @@ pipelines:
             - npx playwright install --with-deps
             - echo "✅ Running Trainer Management Update Trainer tests..."
             - npx playwright test tests/Personal_update.spec.js --reporter=html
-            - npx playwright testtests/Qualification_AED.spec.js --reporter=html
+            - npx playwright test tests/Qualification_AED.spec.js --reporter=html
             - npx playwright test tests/WorkEX_AED.spec.js --reporter=html
-            - npx playwright testests/Trainer_AED.spec.js --reporter=html
+            - npx playwright tes  tests/Trainer_AED.spec.js --reporter=html
             - npx playwright test tests/PD_AED.spec.js --reporter=html
-            - npx playwright testtests/OD_AED.spec.js  --reporter=html
+            - npx playwright test tests/OD_AED.spec.js  --reporter=html
              
           artifacts:
             - Trainer_Management/TM_UpdateTrainer/playwright-report/**
