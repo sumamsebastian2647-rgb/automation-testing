@@ -284,7 +284,7 @@ pipelines:
           caches:
             - node
           script:
-            - cd Trainer_Management/TM_Dashboard
+            - cd Trainer_Managemen/TM_Dashboard
             - npm install
             - npx playwright install --with-deps
             - echo "✅ Running Trainer Dashboard UI validation tests..."
@@ -320,7 +320,7 @@ pipelines:
           caches:
             - node
           script:
-            - cd Trainer_Management/TM_Export
+            - cd TM/TM_Export
             - npm install
             - npx playwright install --with-deps
             - echo "✅ Running Trainer Management Export UI tests..."
@@ -331,3 +331,23 @@ pipelines:
                 --reporter=html
           artifacts:
             - Trainer_Management/TM_Export/playwright-report/**
+# ---- Trainer Management: Inactive Dashboard UI Tests ----
+    trainer-management-inactive-dashboard-ui:
+      - step:
+          name: Run TM Inactive Dashboard UI 
+          caches:
+            - node
+          script:
+            - cd Trainer_Management/TM_Inactive_Dashboard
+            - npm install
+            - npx playwright install --with-deps
+            - echo "✅ Running Trainer Management Inactive Dashboard UI tests..."
+            - npx playwright test tests/UI_Name.spec.js \
+                tests/UI_Username_Email.spec.js \
+                tests/button.spec.js \
+                tests/sorting.spec.js \
+                tests/tooltip.spec.js \
+                --reporter=html
+          artifacts:
+            - Trainer_Management/TM_Inactive_Dashboard/playwright-report/**
+
