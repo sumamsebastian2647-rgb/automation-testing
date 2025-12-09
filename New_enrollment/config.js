@@ -27,7 +27,7 @@ const generateUsers = (count = 5) => {
 
 const config = {
   credentials: {
-    baseUrl: 'https://rto2503.cloudemy.au/site/login',
+    baseUrl: 'https://rto2503.cloudemy.app/site/login',
     username: 'rto2503',
     password: 'Rto@2024$',
   },
@@ -70,16 +70,16 @@ const config = {
     contactPhone: '222222222',
   },
   courselist: {
-    course1: 'Certificate II in Computer Assembly and Repair',
-    course2: 'Certificate I in Conservation and Ecosystem Management',
-    course3: 'Certificate III in Sports Turf Management',
-    course4: 'Aviation Operator Skill Set2024',
+    course1: 'Course in Retrofitting for Energy and Water Efficiency',
+    course2: 'Certificate IV in Training and Assessment',
+    course3: 'Certificate IV in Dance',
+    course4: 'Aqua Exercise Instruction',
   },
   generatelink: {
-    manualacceptancelink1: 'https://rto2503.cloudemy.au/forms?u=5a76e2d9',
-    manualacceptancelink2: 'https://rto2503.cloudemy.au/forms?u=64ff2bd0',
-    autoacceptancelink1: 'https://rto2503.cloudemy.au/forms?u=abc55588',
-    autoacceptancelink2: 'https://rto2503.cloudemy.au/forms?u=1b36df89',
+    manualacceptancelink1: 'https://rto2503.cloudemy.app/forms?u=a9fa7f1f',
+    manualacceptancelink2: 'https://rto2503.cloudemy.app/forms?u=4575b40b',
+    autoacceptancelink1: 'https://rto2503.cloudemy.app/forms?u=7dd4e9c5',
+    autoacceptancelink2: 'https://rto2503.cloudemy.app/forms?u=e3604361',
   },
   courselistexisting: {
     course1_existing: 'Certificate I in Conservation and Ecosystem Management',
