@@ -12,8 +12,8 @@ function generatePersonalFiller(personalData) {
     await page.getByRole('textbox', { name: 'Date of Birth *' }).fill(personalData.dob);
       await page.getByText(personalData.gender).click();
     await page.getByRole('textbox', { name: 'Mobile Phone *' }).fill(personalData.phone);
-    await page.getByRole('textbox', { name: 'Email *' }).fill(personalData.email);
-    await page.getByRole('textbox', { name: 'Confirm Email *' }).fill(personalData.email);
+    await page.getByLabel('Email').fill(personalData.email);
+    await page.getByLabel('Confirm Email').fill(personalData.email);
     await page.getByRole('textbox', { name: 'Username *' }).fill(personalData.username);
     
     await page.getByLabel(personalData.gender).check(); // 'Female', 'Male', or 'Other'
