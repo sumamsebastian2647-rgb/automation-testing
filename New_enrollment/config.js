@@ -27,7 +27,7 @@ const generateUsers = (count = 5) => {
 
 const config = {
   credentials: {
-    baseUrl: 'https://rto2503.cloudemy.app/site/login',
+    baseUrl: 'https://rto2503.cloudemy.au/site/login',
     username: 'rto2503',
     password: 'Rto@2024$',
   },
