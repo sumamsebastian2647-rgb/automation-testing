@@ -161,11 +161,11 @@ async function completePayment_paid(page) {
   await page.locator('label').filter({ hasText: 'In person' }).getByRole('insertion').click();
   await page.getByRole('textbox', { name: 'Payment date *' }).click();
   await page.getByRole('link', { name: String(new Date().getDate()), exact: true }).click();
-  await page.getByRole('button', { name: 'Submit' }).click();
+  await page.locator('#btnSave').click({ noWaitAfter: true });
 }
 async function completePayment_unpaid(page) {
   await page.locator('label').filter({ hasText: 'Pay Later' }).getByRole('insertion').click();
-  await page.getByRole('button', { name: 'Submit' }).click();
+  await page.locator('#btnSave').click({ noWaitAfter: true });
 }
 
 module.exports = {
