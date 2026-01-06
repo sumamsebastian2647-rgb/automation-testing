@@ -51,7 +51,7 @@ const selectors = {
 
 // Centralized page elements
 const getPageElements = (page) => ({
-  studentManagementLink: page.getByRole('link', { name: selectors.studentManagement }),
+  studentManagementLink: page.locator('#student_management > a'),
   enrolledStudentsSearchInput: page.locator('input[name="EnrolledStudentsSearch[name]"]'),
   activeStudentsLink: page.locator('a[href="/enrolled-students/index"]'),
   courseCodeOrNameTextbox: page.locator('#coursesearch-c_name'),
