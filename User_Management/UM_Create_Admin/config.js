@@ -27,6 +27,7 @@ const generateUserCredentials = (role) => {
 };
 
 module.exports = {
+//staging environment
   credentials: {
     baseURL: 'https://rto2503.cloudemy.au/site/login',
     username: 'Rto2503',
@@ -34,7 +35,12 @@ module.exports = {
     student_username: 'navamy123',
     student_password: 'bXqE5fyf',
   },
-
+//Production
+credentials: {
+    baseURL: 'https://rto2503.cloudemy.app/site/login',
+    username: 'Rto2503',
+    password: 'MasterAdmin@2024$',
+  },
   jobRoles: [
     'Course Admin',
     'Student Manager',
