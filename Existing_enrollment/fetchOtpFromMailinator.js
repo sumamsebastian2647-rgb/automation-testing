@@ -20,10 +20,7 @@ async function fetchOtpFromMailinator(inboxName) {
     await page.click('tr:has-text("Your OTP Code")');
 
     // Wait for message content
-    await page.waitForSelector('#html_msg_body', { 
-      timeout: 60000,
-      state: 'visible'
-    });
+    await page.waitForSelector('#html_msg_body', { state: 'attached', timeout: 60000 });
 
     // Get email content from iframe
     const frame = page.frameLocator('#html_msg_body');
