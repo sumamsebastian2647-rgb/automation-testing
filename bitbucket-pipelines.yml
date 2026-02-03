@@ -27,8 +27,8 @@ pipelines:
             - npx playwright test --reporter=html
           artifacts:
             - Course_Forum_with_cohort/playwright-report/**
-
-    new-enrollment:
+   #-- New enrollment-domestic form
+    New-enrolment-Domestic Form:
       - step:
           name: Test New Enrollment
           caches:
@@ -40,6 +40,24 @@ pipelines:
             - npx playwright test --reporter=html
           artifacts:
             - New_enrollment/playwright-report/**
+   #-- Exisitng enrollment-domestic form
+    Existing Enrolment-Domestic form:
+      - step:
+          name: Run Existing Enrollment Automation
+          caches:
+            - node
+          script:
+            - cd Existing_enrollment
+            - npm install
+            - npx playwright install --with-deps
+            - echo "✅ Running Existing Enrollment automation tests..."
+            # Run NEW enrollment first
+            - npx playwright test tests/newenrollment.spec.js --reporter=html
+            # Run EXISTING enrollment next
+            - npx playwright test tests/existingstudent.spec.js --reporter=html
+          artifacts:
+            - automation-testing/Existing_enrollment/playwright-report/**
+
 
      # ----  Create  Admin Tests ----
     User_Management-create-admin:
