@@ -27,6 +27,128 @@ pipelines:
             - npx playwright test --reporter=html
           artifacts:
             - Course_Forum_with_cohort/playwright-report/**
+    #Course Management-Course Category
+    CM-Course Category:
+      - step:
+          name: CM Course Category – Automation Tests
+          caches:
+            - node
+          script:
+            - echo "📁 Navigating to Course Category module"
+            - cd Course_Management/CM_Course_Category
+            - echo "📦 Installing dependencies"
+            - npm install
+            - echo "🎭 Installing Playwright browsers"
+            - npx playwright install --with-deps
+            - echo "🚀 Running Course Category tests"
+            # View dashboard tests
+            - npx playwright test tests/view_dashboard.spec.js --reporter=html --workers=1
+            # Create course category
+            - npx playwright test tests/create_course.spec.js --reporter=html --workers=1
+            # Update dashboard
+            - npx playwright test tests/update_dashboard.spec.js --reporter=html --workers=1
+            # Sorting functionality
+            - npx playwright test tests/sorting.spec.js --reporter=html --workers=1
+            # Pagination checks
+            - npx playwright test tests/pagination.spec.js --reporter=html --workers=1
+            # Inactivate category
+            - npx playwright test tests/inactivate.spec.js --reporter=html --workers=1
+            - echo "✅ CM Course Category tests completed"
+          artifacts:
+            - Course_Management/CM_Course_Category/playwright-report/**
+  #Course Management-Course List Dashboard
+    CM-Course-List-Dashboard:
+      - step:
+          name: CM Course List Dashboard – Automation Tests
+          caches:
+            - node
+          script:
+            - echo "📁 Navigating to Course List Dashboard module"
+            - cd Course_Management/CM_Course_List_Dashboard
+            - echo "📦 Installing dependencies"
+            - npm install
+            - echo "🎭 Installing Playwright browsers"
+            - npx playwright install --with-deps
+            - echo "🚀 Running Course List Dashboard tests"
+            # View dashboard
+            - npx playwright test tests/view_dashboard.spec.js --reporter=html
+            # Search functionality
+            - npx playwright test tests/search.spec.js --reporter=html 
+            # Update dashboard
+            - npx playwright test tests/update_dashboard.spec.js --reporter=html 
+            # Pagination checks
+            - npx playwright test tests/pagination.spec.js --reporter=html --workers=1
+            - echo "✅ CM Course List Dashboard tests completed"
+          artifacts:
+            - Course_Management/CM_Course_List_Dashboard/playwright-report/**
+  #Course Management-Course Cohort
+    CM-Cohort:
+      - step:
+          name: CM Course Cohort – Automation Tests
+          caches:
+            - node
+          script:
+            - echo "📁 Navigating to Course Cohort module"
+            - cd Course_Management/CM_Course_cohort
+            - echo "📦 Installing dependencies"
+            - npm install
+            - echo "🎭 Installing Playwright browsers"
+            - npx playwright install --with-deps
+            - echo "🚀 Running Course Cohort tests"
+            # View cohort
+            - npx playwright test tests/view.spec.js --reporter=html --workers=1
+            # Create cohort
+            - npx playwright test tests/create.spec.js --reporter=html --workers=1
+            # Update cohort
+            - npx playwright test tests/update.spec.js --reporter=html --workers=1
+            - echo "✅ CM Course Cohort tests completed"
+          artifacts:
+            - Course_Management/CM_Course_cohort/playwright-report/**
+   #Course Management-Course Cohort
+    CM-Cohort-Dashboard:
+      - step:
+          name: CM Course Cohort Dashboard – Automation Tests
+          caches:
+            - node
+          script:
+            - echo "📁 Navigating to Course Cohort Dashboard module"
+            - cd Course_Management/CM_Course_cohort_Dashboard
+            - echo "📦 Installing dependencies"
+            - npm install
+            - echo "🎭 Installing Playwright browsers"
+            - npx playwright install --with-deps
+            - echo "🚀 Running Course Cohort Dashboard tests"
+            # Button actions
+            - npx playwright test tests/button.spec.js --reporter=html --workers=1
+            # Cohort dashboard validations
+            - npx playwright test tests/cohort.spec.js --reporter=html --workers=1
+            # Pagination checks
+            - npx playwright test tests/pagination.spec.js --reporter=html --workers=1
+            - echo "✅ CM Course Cohort Dashboard tests completed"
+          artifacts:
+            - Course_Management/CM_Course_cohort_Dashboard/playwright-report/**
+  #Custom Field Enrollment
+    custom-field-enrollment:
+      - step:
+          name: Custom Field Enrollment – Automation Tests
+          caches:
+            - node
+          script:
+            - echo "📁 Navigating to Custom Field Enrollment module"
+            - cd Custom_Field_Enrollment
+            - echo "📦 Installing dependencies"
+            - npm install
+            - echo "🎭 Installing Playwright browsers"
+            - npx playwright install --with-deps
+            - echo "🚀 Running Custom Field Enrollment tests"
+            # Create custom fields
+            - npx playwright test tests/create.spec.js --reporter=html --workers=1
+            # New enrollment with custom fields
+            - npx playwright test tests/newenrollment.spec.js --reporter=html --workers=1
+            - echo "✅ Custom Field Enrollment tests completed"
+          artifacts:
+            - Custom_Field_Enrollment/playwright-report/**
+
    #-- New enrollment-domestic form
     New-enrolment-Domestic Form:
       - step:
@@ -37,7 +159,7 @@ pipelines:
             - cd New_enrollment
             - npm install
             - npx playwright install --with-deps
-            - npx playwright test --reporter=html
+            - npx playwright test --reporter=html  --workers=4
           artifacts:
             - New_enrollment/playwright-report/**
    #-- Exisitng enrollment-domestic form
@@ -52,13 +174,11 @@ pipelines:
             - npx playwright install --with-deps
             - echo "✅ Running Existing Enrollment automation tests..."
             # Run NEW enrollment first
-            - npx playwright test tests/newenrollment.spec.js --reporter=html
+            - npx playwright test tests/newenrollment.spec.js --reporter=html --workers=4
             # Run EXISTING enrollment next
-            - npx playwright test tests/existingstudent.spec.js --reporter=html
+            - npx playwright test tests/existingstudent.spec.js --reporter=html  --workers=4
           artifacts:
             - automation-testing/Existing_enrollment/playwright-report/**
-
-
      # ----  Create  Admin Tests ----
     User_Management-create-admin:
       - step:
