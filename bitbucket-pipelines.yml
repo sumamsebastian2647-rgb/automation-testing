@@ -42,7 +42,7 @@ pipelines:
             - New_enrollment/playwright-report/**
 
      # ----  Create  Admin Tests ----
-    create-admin:
+    User_Management-create-admin:
       - step:
           name: Test Create Admin
           caches:
@@ -52,24 +52,13 @@ pipelines:
             - npm install
             - npx playwright install --with-deps
             - npx playwright test tests/create_admin.spec.js --reporter=html
-          artifacts:
-            - User_Management/UM_Create_Admin/playwright-report/**
-
-    create-admin-ui:
-      - step:
-          name: Test Create Admin UI
-          caches:
-            - node
-          script:
-            - cd User_Management/UM_Create_Admin
-            - npm install
-            - npx playwright install --with-deps
             - npx playwright test tests/Create_admin_UI.spec.js --reporter=html
           artifacts:
             - User_Management/UM_Create_Admin/playwright-report/**
 
+
     # ----  Update Admin Tests ----
-    update-admin:
+    User_Management-update-admin:
       - step:
           name: Test Update Admin
           caches:
@@ -79,24 +68,12 @@ pipelines:
             - npm install
             - npx playwright install --with-deps
             - npx playwright test tests/update_admin.spec.js --reporter=html
-          artifacts:
-            - User_Management/UM_Update_Admin/playwright-report/**
-
-    update-admin-ui:
-      - step:
-          name: Test Update Admin UI
-          caches:
-            - node
-          script:
-            - cd User_Management/UM_Update_Admin
-            - npm install
-            - npx playwright install --with-deps
             - npx playwright test tests/update_admin_UI.spec.js --reporter=html
           artifacts:
             - User_Management/UM_Update_Admin/playwright-report/**
 
     # ----  SetPermission in user management Tests ---
-    set-permission:
+    User_Management-set-permission:
       - step:
           name: Test Student Permissions
           caches:
@@ -110,7 +87,7 @@ pipelines:
             - User_Management/UM_SM_Setpermission/playwright-report/**
 
     #-----------Active inactive Test---------------------
-    um-active-inactive-admin:
+    User_Management-active-inactive-admin:
       - step:
           name: Run UM Active/Inactive Admin Tests
           caches:
@@ -125,7 +102,7 @@ pipelines:
             - User_Management/UM_Active_Inactive_Admin/playwright-report/**
 
     # -------Dashboard UI  ------
-    dashboard-ui-all:
+    User_Management-dashboard:
       - step:
           name: Run Dashboard UI Tests (All in Order)
           caches:
@@ -141,7 +118,7 @@ pipelines:
             - User_Management/UM_Dashboard_UI/playwright-report/**
 
     # -------UM Export Tests  ------
-    um-export-all:
+    User_Management-export:
       - step:
           name: Run UM_Export Tests (All in Order)
           caches:
