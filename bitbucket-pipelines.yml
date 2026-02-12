@@ -1,488 +1,169 @@
 image: mcr.microsoft.com/playwright:v1.44.0-jammy
 
 pipelines:
-  default:
-    - step:
-        name: Run All Tests
-        caches:
-          - node
-        script:
-          - npm install
-          - npx playwright install --with-deps
-          - npx playwright test --reporter=html
-        artifacts:
-          - playwright-report/**
 
-  custom:
-    # ---- Existing Custom Pipelines ----
-    course-forum:
-      - step:
-          name: Test Course Forum with Cohort
-          caches:
-            - node
-          script:
-            - cd Course_Forum_with_cohort
-            - npm install
-            - npx playwright install --with-deps
-            - npx playwright test --reporter=html
-          artifacts:
-            - Course_Forum_with_cohort/playwright-report/**
-    #Course Management-Course Category
-    CM-Course Category:
-      - step:
-          name: CM Course Category – Automation Tests
-          caches:
-            - node
-          script:
-            - echo "📁 Navigating to Course Category module"
-            - cd Course_Management/CM_Course_Category
-            - echo "📦 Installing dependencies"
-            - npm install
-            - echo "🎭 Installing Playwright browsers"
-            - npx playwright install --with-deps
-            - echo "🚀 Running Course Category tests"
-            # View dashboard tests
-            - npx playwright test tests/view_dashboard.spec.js --reporter=html --workers=1
-            # Create course category
-            - npx playwright test tests/create_course.spec.js --reporter=html --workers=1
-            # Update dashboard
-            - npx playwright test tests/update_dashboard.spec.js --reporter=html --workers=1
-            # Sorting functionality
-            - npx playwright test tests/sorting.spec.js --reporter=html --workers=1
-            # Pagination checks
-            - npx playwright test tests/pagination.spec.js --reporter=html --workers=1
-            # Inactivate category
-            - npx playwright test tests/inactivate.spec.js --reporter=html --workers=1
-            - echo "✅ CM Course Category tests completed"
-          artifacts:
-            - Course_Management/CM_Course_Category/playwright-report/**
-  #Course Management-Course List Dashboard
-    CM-Course-List-Dashboard:
-      - step:
-          name: CM Course List Dashboard – Automation Tests
-          caches:
-            - node
-          script:
-            - echo "📁 Navigating to Course List Dashboard module"
-            - cd Course_Management/CM_Course_List_Dashboard
-            - echo "📦 Installing dependencies"
-            - npm install
-            - echo "🎭 Installing Playwright browsers"
-            - npx playwright install --with-deps
-            - echo "🚀 Running Course List Dashboard tests"
-            # View dashboard
-            - npx playwright test tests/view_dashboard.spec.js --reporter=html
-            # Search functionality
-            - npx playwright test tests/search.spec.js --reporter=html 
-            # Update dashboard
-            - npx playwright test tests/update_dashboard.spec.js --reporter=html 
-            # Pagination checks
-            - npx playwright test tests/pagination.spec.js --reporter=html --workers=1
-            - echo "✅ CM Course List Dashboard tests completed"
-          artifacts:
-            - Course_Management/CM_Course_List_Dashboard/playwright-report/**
-  #Course Management-Course Cohort
-    CM-Cohort:
-      - step:
-          name: CM Course Cohort – Automation Tests
-          caches:
-            - node
-          script:
-            - echo "📁 Navigating to Course Cohort module"
-            - cd Course_Management/CM_Course_cohort
-            - echo "📦 Installing dependencies"
-            - npm install
-            - echo "🎭 Installing Playwright browsers"
-            - npx playwright install --with-deps
-            - echo "🚀 Running Course Cohort tests"
-            # View cohort
-            - npx playwright test tests/view.spec.js --reporter=html --workers=1
-            # Create cohort
-            - npx playwright test tests/create.spec.js --reporter=html --workers=1
-            # Update cohort
-            - npx playwright test tests/update.spec.js --reporter=html --workers=1
-            - echo "✅ CM Course Cohort tests completed"
-          artifacts:
-            - Course_Management/CM_Course_cohort/playwright-report/**
-   #Course Management-Course Cohort
-    CM-Cohort-Dashboard:
-      - step:
-          name: CM Course Cohort Dashboard – Automation Tests
-          caches:
-            - node
-          script:
-            - echo "📁 Navigating to Course Cohort Dashboard module"
-            - cd Course_Management/CM_Course_cohort_Dashboard
-            - echo "📦 Installing dependencies"
-            - npm install
-            - echo "🎭 Installing Playwright browsers"
-            - npx playwright install --with-deps
-            - echo "🚀 Running Course Cohort Dashboard tests"
-            # Button actions
-            - npx playwright test tests/button.spec.js --reporter=html --workers=1
-            # Cohort dashboard validations
-            - npx playwright test tests/cohort.spec.js --reporter=html --workers=1
-            # Pagination checks
-            - npx playwright test tests/pagination.spec.js --reporter=html --workers=1
-            - echo "✅ CM Course Cohort Dashboard tests completed"
-          artifacts:
-            - Course_Management/CM_Course_cohort_Dashboard/playwright-report/**
-  #Custom Field Enrollment
-    custom-field-enrollment:
-      - step:
-          name: Custom Field Enrollment – Automation Tests
-          caches:
-            - node
-          script:
-            - echo "📁 Navigating to Custom Field Enrollment module"
-            - cd Custom_Field_Enrollment
-            - echo "📦 Installing dependencies"
-            - npm install
-            - echo "🎭 Installing Playwright browsers"
-            - npx playwright install --with-deps
-            - echo "🚀 Running Custom Field Enrollment tests"
-            # Create custom fields
-            - npx playwright test tests/create.spec.js --reporter=html --workers=1
-            # New enrollment with custom fields
-            - npx playwright test tests/newenrollment.spec.js --reporter=html --workers=1
-            - echo "✅ Custom Field Enrollment tests completed"
-          artifacts:
-            - Custom_Field_Enrollment/playwright-report/**
+  # ==================================================
+  # 🔐 PR VALIDATION (BLOCK MERGE IF FAILS)
+  # ==================================================
+  pull-requests:
+    '**':
 
-   #-- New enrollment-domestic form
-    New-enrolment-Domestic Form:
+      # Always protect core flows BEFORE merge
       - step:
-          name: Test New Enrollment
-          caches:
-            - node
+          name: PR - New Enrollment
+          caches: [node]
           script:
             - cd New_enrollment
             - npm install
             - npx playwright install --with-deps
-            - npx playwright test --reporter=html  --workers=4
-          artifacts:
-            - New_enrollment/playwright-report/**
-   #-- Exisitng enrollment-domestic form
-    Existing Enrolment-Domestic form:
+            - npx playwright test
+
       - step:
-          name: Run Existing Enrollment Automation
-          caches:
-            - node
+          name: PR - Existing Enrollment
+          caches: [node]
           script:
             - cd Existing_enrollment
             - npm install
             - npx playwright install --with-deps
-            - echo "✅ Running Existing Enrollment automation tests..."
-            # Run NEW enrollment first
-            - npx playwright test tests/newenrollment.spec.js --reporter=html --workers=4
-            # Run EXISTING enrollment next
-            - npx playwright test tests/existingstudent.spec.js --reporter=html  --workers=4
-          artifacts:
-            - automation-testing/Existing_enrollment/playwright-report/**
-     # ----  Create  Admin Tests ----
-    User_Management-create-admin:
+            - npx playwright test
+
+
+      # Conditional Modules (run only if changed)
+
       - step:
-          name: Test Create Admin
-          caches:
-            - node
+          name: PR - Trainer Management
+          condition:
+            changesets:
+              includePaths:
+                - "Trainer_Management/**"
+          caches: [node]
           script:
-            - cd User_Management/UM_Create_Admin
+            - cd Trainer_Management
             - npm install
-            - npx playwright install --with-deps
-            - npx playwright test tests/create_admin.spec.js --reporter=html
-            - npx playwright test tests/Create_admin_UI.spec.js --reporter=html
-          artifacts:
-            - User_Management/UM_Create_Admin/playwright-report/**
+            - npx playwright test
 
-
-    # ----  Update Admin Tests ----
-    User_Management-update-admin:
       - step:
-          name: Test Update Admin
-          caches:
-            - node
+          name: PR - Course Management
+          condition:
+            changesets:
+              includePaths:
+                - "Course_Management/**"
+          caches: [node]
           script:
-            - cd User_Management/UM_Update_Admin
+            - cd Course_Management
             - npm install
-            - npx playwright install --with-deps
-            - npx playwright test tests/update_admin.spec.js --reporter=html
-            - npx playwright test tests/update_admin_UI.spec.js --reporter=html
-          artifacts:
-            - User_Management/UM_Update_Admin/playwright-report/**
+            - npx playwright test
 
-    # ----  SetPermission in user management Tests ---
-    User_Management-set-permission:
       - step:
-          name: Test Student Permissions
-          caches:
-            - node
-          script:
-            - cd User_Management/UM_SM_Setpermission
-            - npm install
-            - npx playwright install --with-deps
-            - npx playwright test tests/studentPermissions.spec.js --reporter=html
-          artifacts:
-            - User_Management/UM_SM_Setpermission/playwright-report/**
-
-    #-----------Active inactive Test---------------------
-    User_Management-active-inactive-admin:
-      - step:
-          name: Run UM Active/Inactive Admin Tests
-          caches:
-            - node
-          script:
-            - cd User_Management/UM_Active_Inactive_Admin
-            - npm install
-            - npx playwright install --with-deps
-            - echo "✅ Running Active/Inactive Admin test..."
-            - npx playwright test tests/activate_inactivate.spec.js --reporter=html
-          artifacts:
-            - User_Management/UM_Active_Inactive_Admin/playwright-report/**
-
-    # -------Dashboard UI  ------
-    User_Management-dashboard:
-      - step:
-          name: Run Dashboard UI Tests (All in Order)
-          caches:
-            - node
-          script:
-            - cd User_Management/UM_Dashboard_UI
-            - npm install
-            - npx playwright install --with-deps
-            - echo "✅ Running Dashboard UI tests in order..."
-            - npx playwright test tests/dashboard.spec.js --reporter=html
-            - npx playwright test tests/sorting.spec.js --reporter=html
-          artifacts:
-            - User_Management/UM_Dashboard_UI/playwright-report/**
-
-    # -------UM Export Tests  ------
-    User_Management-export:
-      - step:
-          name: Run UM_Export Tests (All in Order)
-          caches:
-            - node
-          script:
-            - cd automation-testing/User_Management/UM_Export
-            - npm install
-            - npx playwright install --with-deps
-            - echo "✅ Running UM_Export tests in order..."
-            - npx playwright test tests/export.spec.js --reporter=html
-            - npx playwright test tests/grid_reset.spec.js --reporter=html
-            - npx playwright test tests/pagination.spec.js --reporter=html
-            - npx playwright test tests/reorder_column.spec.js --reporter=html
-          artifacts:
-            - automation-testing/User_Management/UM_Export/playwright-report/**
-
-    # ---- NEW: Course Induction Tests ----
-    course-induction-all:
-      - step:
-          name: Run Course Induction Tests (All in Order)
-          caches:
-            - node
+          name: PR - Course Induction
+          condition:
+            changesets:
+              includePaths:
+                - "Course_Induction/**"
+          caches: [node]
           script:
             - cd Course_Induction
             - npm install
-            - npx playwright install --with-deps
-            - echo "✅ Running Course Induction in order..."
-            - npx playwright test tests/createcourse_induction.spec.js --reporter=html
-            - npx playwright test tests/add_task.spec.js --reporter=html
-            - npx playwright test tests/link_to_course.spec.js --reporter=html
-            - npx playwright test tests/submit_induction.spec.js --reporter=html
-            - npx playwright test tests/review_induction.spec.js --reporter=html
-          artifacts:
-            - Course_Induction/playwright-report/**
+            - npx playwright test
 
-    course-induction-createcourse:
       - step:
-          name: Run Create Course Induction
-          caches:
-            - node
+          name: PR - Custom Field Enrollment
+          condition:
+            changesets:
+              includePaths:
+                - "Custom_Field_Enrollment/**"
+          caches: [node]
           script:
-            - cd Course_Induction
+            - cd Custom_Field_Enrollment
             - npm install
-            - npx playwright install --with-deps
-            - npx playwright test tests/createcourse_induction.spec.js --reporter=html
-          artifacts:
-            - Course_Induction/playwright-report/**
+            - npx playwright test
 
-    course-induction-addtask:
       - step:
-          name: Run Add Task Test
-          caches:
-            - node
+          name: PR - Student Login
+          condition:
+            changesets:
+              includePaths:
+                - "Student_Login_Verify_links/**"
+          caches: [node]
           script:
-            - cd Course_Induction
+            - cd Student_Login_Verify_links
             - npm install
-            - npx playwright install --with-deps
-            - npx playwright test tests/add_task.spec.js --reporter=html
-          artifacts:
-            - Course_Induction/playwright-report/**
+            - npx playwright test
 
-    course-induction-linkcourse:
       - step:
-          name: Run Link Course Test
-          caches:
-            - node
+          name: PR - User Management
+          condition:
+            changesets:
+              includePaths:
+                - "User_Management/**"
+          caches: [node]
           script:
-            - cd Course_Induction
+            - cd User_Management
             - npm install
-            - npx playwright install --with-deps
-            - npx playwright test tests/link_to_course.spec.js --reporter=html
-          artifacts:
-            - Course_Induction/playwright-report/**
+            - npx playwright test
 
-    course-induction-submit:
       - step:
-          name: Run Submit Induction Test
-          caches:
-            - node
+          name: PR - Course Forum
+          condition:
+            changesets:
+              includePaths:
+                - "Course_Forum_with_cohort/**"
+          caches: [node]
           script:
-            - cd Course_Induction
+            - cd Course_Forum_with_cohort
             - npm install
-            - npx playwright install --with-deps
-            - npx playwright test tests/submit_induction.spec.js --reporter=html
-          artifacts:
-            - Course_Induction/playwright-report/**
+            - npx playwright test
 
-    course-induction-review:
-      - step:
-          name: Run Review Induction Test
-          caches:
-            - node
-          script:
-            - cd Course_Induction
-            - npm install
-            - npx playwright install --with-deps
-            - npx playwright test tests/review_induction.spec.js --reporter=html
-          artifacts:
-            - Course_Induction/playwright-report/**
-    
-    # ---- Trainer Management Create Trainer Tests (Combined) ----
-    TM Dashboard Create Trainer & UI :
-      - step:
-          name: Run TM Dashboard Create Trainer & UI 
-          caches:
-            - node
-          script:
-            - cd Trainer_Management/TM_CreateTrainer
-            - npm install
-            - npx playwright install --with-deps
-            - echo "✅ Running Trainer Management Create Trainer tests..."
-            # Run both spec files together
-            - npx playwright test tests/createTrainer.spec.js --reporter=html
-            - npx playwright test tests/createtrainer_UI.spec.js --reporter=html
-                
-          artifacts:
-            - Trainer_Management/TM_CreateTrainer/playwright-report/**  
 
-  # ---- Trainer Management Dashboard Tests ----
-    TM Dashboard Action_icons:
-      - step:
-          name: Run TM Dashboard Action_icons
-          caches:
-            - node
-          script:
-            - cd Trainer_Management/TM_Dashboard-action
-            - npm install
-            - npx playwright install --with-deps
-            - echo "✅ Running Trainer Management Dashboard tests..."
-            - npx playwright test tests/loginas_trainer.spec.js --reporter=html
-            - npx playwright test tests/view.spec.js  --reporter=html
-               
-          artifacts:
-            - Trainer_Management/TM_Dashboard-action/playwright-report/**
 
-# ---- Trainer Management Dashboard UI Validation Tests (Combined) ----
-    TM Dashboar Dashboard UI Validation:
-      - step:
-          name: Run TM Dashboar Dashboard UI Validation 
-          caches:
-            - node
-          script:
-            - cd Trainer_Managemen/TM_Dashboard
-            - npm install
-            - npx playwright install --with-deps
-            - echo "✅ Running Trainer Dashboard UI validation tests..."
-            # Run all related UI validation spec files together
-            - npx playwright test tests/UI_Search_Name.spec.js --reporter=html
-            - npx playwright test tests/UI_Search_Username_Email.spec.js  --reporter=html
-            - npx playwright test tests/button.spec.js --reporter=html
-            - npx playwright test tests/sorting.spec.js  --reporter=html
-            - npx playwright test tests/tooltip.spec.js  --reporter=html
-               
-          artifacts:
-            - Trainer_Management/TM_Dashboard/playwright-report/**
+  # ==================================================
+  # 🟢 AFTER MERGE TO STAGING
+  # ==================================================
+  branches:
+    staging:
 
-# ---- Trainer Management: Active/Inactive UI Tests ----
-    TM Dashboard Active/Inactive Action:
       - step:
-          name: Run TM Dashboard Active/Inactive Action
-          caches:
-            - node
+          name: Post-Merge - New Enrollment
+          caches: [node]
           script:
-            - cd Trainer_Management/TM_Active_Inactive
+            - cd New_enrollment
             - npm install
-            - npx playwright install --with-deps
-            - echo "✅ Running Trainer Management Active/Inactive UI tests..."
-            - npx playwright test tests/activate_inactivate.spec.js --reporter=html
-          artifacts:
-            - Trainer_Management/TM_Active_Inactive/playwright-report/**
+            - npx playwright test
 
-# ---- Trainer Management: Export UI Tests ----
-    TM Grid function:
       - step:
-          name: Run TM Grid function
-          caches:
-            - node
+          name: Post-Merge - Existing Enrollment
+          caches: [node]
           script:
-            - cd Trainer_Management/TM_Export
+            - cd Existing_enrollment
             - npm install
-            - npx playwright install --with-deps
-            - echo "✅ Running Trainer Management Export UI tests..."
-            - npx playwright test tests/export_active.spec.js --reporter=html
-            - npx playwright test tests/grid_reset.spec.js --reporter=html
-            - npx playwright test tests/pagination.spec.js --reporter=html
-            - npx playwright test tests/reorder_column.spec.js --reporter=html
-                
-          artifacts:
-            - Trainer_Management/TM_Export/playwright-report/**
-# ---- Trainer Management: Inactive Dashboard UI Tests ----
-    TM Inactive Dashboard UI :
-      - step:
-          name: Run TM Inactive Dashboard UI 
-          caches:
-            - node
-          script:
-            - cd Trainer_Management/TM_Inactive_Dashboard
-            - npm install
-            - npx playwright install --with-deps
-            - echo "✅ Running Trainer Management Inactive Dashboard UI tests..."
-            - npx playwright test tests/UI_Name.spec.js --reporter=html
-            - npx playwright test tests/UI_Username_Email.spec.js --reporter=html
-            - npx playwright test tests/button.spec.js --reporter=html
-            - npx playwright test tests/sorting.spec.js --reporter=html
-            - npx playwright test tests/tooltip.spec.js --reporter=html
-                
-          artifacts:
-            - Trainer_Management/TM_Inactive_Dashboard/playwright-report/**
+            - npx playwright test
 
-  # ---- Trainer Management: Update Trainer Tests ----
-    TM Update Trainer :
+
+    # ==================================================
+    # 🔴 AFTER MERGE TO MAIN (RELEASE)
+    # FULL SYSTEM VALIDATION
+    # ==================================================
+    main:
+
       - step:
-          name: Run TM Update Trainer 
-          caches:
-            - node
+          name: Release - Full Regression
+          caches: [node]
           script:
-            - cd Trainer_Management/TM_UpdateTrainer
-            - npm install
-            - npx playwright install --with-deps
-            - echo "✅ Running Trainer Management Update Trainer tests..."
-            - npx playwright test tests/Personal_update.spec.js --reporter=html
-            - npx playwright test tests/Qualification_AED.spec.js --reporter=html
-            - npx playwright test tests/WorkEX_AED.spec.js --reporter=html
-            - npx playwright tes  tests/Trainer_AED.spec.js --reporter=html
-            - npx playwright test tests/PD_AED.spec.js --reporter=html
-            - npx playwright test tests/OD_AED.spec.js  --reporter=html
-             
-          artifacts:
-            - Trainer_Management/TM_UpdateTrainer/playwright-report/**
+            - |
+              for dir in \
+                Course_Forum_with_cohort \
+                Course_Induction \
+                Course_Management \
+                Custom_Field_Enrollment \
+                Existing_enrollment \
+                New_enrollment \
+                Student_Login_Verify_links \
+                Trainer_Management \
+                User_Management
+              do
+                echo "Running tests in $dir"
+                cd $dir
+                npm install
+                npx playwright test
+                cd ..
+              done
