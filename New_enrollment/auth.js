@@ -18,3 +18,4 @@ async function logout(page) {
 const loginAsAdmin = login;
 const logoutAsAdmin = logout;
 module.exports = { login, loginAsAdmin,logoutAsAdmin, logout };
+//login
