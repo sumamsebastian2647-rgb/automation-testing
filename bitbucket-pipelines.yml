@@ -1,1 +1,27 @@
-f
+image: node:20
+
+pipelines:
+  pull-requests:
+    staging:
+      - step:
+          name: Run Cloudemy Smoke Tests (Staging)
+          caches:
+            - node
+          script:
+            - npm ci
+            - npx playwright install --with-deps
+            - npx playwright test Cloudemy --grep "@smoke"
+          artifacts:
+            - playwright-report/**
+
+    production:
+      - step:
+          name: Run Cloudemy Smoke Tests (Production)
+          caches:
+            - node
+          script:
+            - npm ci
+            - npx playwright install --with-deps
+            - npx playwright test Cloudemy --grep "@smoke"
+          artifacts:
+            - playwright-report/**
