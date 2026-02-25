@@ -1,6 +1,12 @@
-name: External Trigger Smoke Tests
+name: Smoke Tests (PR + External)
 
 on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "Cloudemy/**"
+
   repository_dispatch:
     types: [run-cloudemy-smoke]
 
@@ -22,7 +28,7 @@ jobs:
           cd Cloudemy
           npm install
 
-      - name: Install Playwright Browsers
+      - name: Install Playwright
         run: |
           cd Cloudemy
           npx playwright install --with-deps
@@ -32,7 +38,7 @@ jobs:
           cd Cloudemy
           npx playwright test --grep "@smoke"
 
-      - name: Upload Test Report
+      - name: Upload Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
