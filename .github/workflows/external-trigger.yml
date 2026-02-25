@@ -18,17 +18,23 @@ jobs:
           node-version: 20
 
       - name: Install Dependencies
-        run: npm install
+        run: |
+          cd Cloudemy
+          npm install
 
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: |
+          cd Cloudemy
+          npx playwright install --with-deps
 
       - name: Run Smoke Tests
-        run: npx playwright test --grep "@smoke"
+        run: |
+          cd Cloudemy
+          npx playwright test --grep "@smoke"
 
       - name: Upload Test Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: smoke-report
-          path: playwright-report/
+          path: Cloudemy/playwright-report/
