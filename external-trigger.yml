@@ -1,1 +1,24 @@
+name: External Trigger Smoke Tests
 
+on:
+  repository_dispatch:
+    types: [run-cloudemy-smoke]
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Install Playwright
+        run:
