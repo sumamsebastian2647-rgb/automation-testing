@@ -18,14 +18,11 @@ pipelines:
           script:
             - npm ci
             - npx playwright test --grep "@smoke"
-
-            # 🔥 Trigger GitHub workflow
-            - curl -X POST \
-              -H "Authorization: token ${GITHUB_TOKEN}" \
-              -H "Accept: application/vnd.github.v3+json" \
-              https://api.github.com/repos/sumamsebastian2647-rgb/automation-ci/dispatches \
+            - >
+              curl -X POST -H "Authorization: token ${GITHUB_TOKEN}"
+              -H "Accept: application/vnd.github.v3+json"
+              https://api.github.com/repos/sumamsebastian2647-rgb/automation-ci/dispatches
               -d '{"event_type":"run-smoke"}'
-
           artifacts:
             - playwright-report/**
 
@@ -38,14 +35,11 @@ pipelines:
           script:
             - npm ci
             - npx playwright test
-
-            # 🔥 Trigger GitHub workflow
-            - curl -X POST \
-              -H "Authorization: token ${GITHUB_TOKEN}" \
-              -H "Accept: application/vnd.github.v3+json" \
-              https://api.github.com/repos/sumamsebastian2647-rgb/automation-ci/dispatches \
+            - >
+              curl -X POST -H "Authorization: token ${GITHUB_TOKEN}"
+              -H "Accept: application/vnd.github.v3+json"
+              https://api.github.com/repos/sumamsebastian2647-rgb/automation-ci/dispatches
               -d '{"event_type":"run-smoke"}'
-
           artifacts:
             - playwright-report/**
 
@@ -56,11 +50,10 @@ pipelines:
           script:
             - npm ci
             - npx playwright test --grep "@smoke"
-
-            - curl -X POST \
-              -H "Authorization: token ${GITHUB_TOKEN}" \
-              -H "Accept: application/vnd.github.v3+json" \
-              https://api.github.com/repos/sumamsebastian2647-rgb/automation-ci/dispatches \
+            - >
+              curl -X POST -H "Authorization: token ${GITHUB_TOKEN}"
+              -H "Accept: application/vnd.github.v3+json"
+              https://api.github.com/repos/sumamsebastian2647-rgb/automation-ci/dispatches
               -d '{"event_type":"run-smoke"}'
 
     regression:
@@ -69,9 +62,8 @@ pipelines:
           script:
             - npm ci
             - npx playwright test
-
-            - curl -X POST \
-              -H "Authorization: token ${GITHUB_TOKEN}" \
-              -H "Accept: application/vnd.github.v3+json" \
-              https://api.github.com/repos/sumamsebastian2647-rgb/automation-ci/dispatches \
+            - >
+              curl -X POST -H "Authorization: token ${GITHUB_TOKEN}"
+              -H "Accept: application/vnd.github.v3+json"
+              https://api.github.com/repos/sumamsebastian2647-rgb/automation-ci/dispatches
               -d '{"event_type":"run-smoke"}'
