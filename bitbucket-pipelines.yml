@@ -1,27 +1,43 @@
-image: node:20
+image: mcr.microsoft.com/playwright:v1.42.1-jammy
+
+options:
+  size: 2x   # improves performance
 
 pipelines:
   branches:
     staging:
       - step:
-          name: Run Cloudemy Smoke Tests (Staging)
+          name: Run Smoke Tests (Staging)
           caches:
             - node
           script:
             - npm ci
-            - npx playwright install --with-deps
             - npx playwright test --grep "@smoke"
           artifacts:
             - playwright-report/**
 
     main:
       - step:
-          name: Run Cloudemy Full Regression (Production)
+          name: Run Full Regression (Main)
           caches:
             - node
           script:
             - npm ci
-            - npx playwright install --with-deps
             - npx playwright test
           artifacts:
             - playwright-report/**
+
+  custom:
+    smoke:
+      - step:
+          name: Manual Smoke Run
+          script:
+            - npm ci
+            - npx playwright test --grep "@smoke"
+
+    regression:
+      - step:
+          name: Manual Full Regression
+          script:
+            - npm ci
+            - npx playwright test
