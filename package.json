@@ -1,0 +1,27 @@
+{
+  "name": "enrollment-tests",
+  "version": "1.0.0",
+  "description": "Unified enrollment testing suite for New, Existing, and International enrollments",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:new": "npx playwright test --project=new-enrollment",
+    "test:existing": "npx playwright test --project=existing-enrollment",
+    "test:international": "npx playwright test --project=international-enrollment",
+    "test:headed": "npx playwright test --headed",
+    "test:headless": "CI=true npx playwright test",
+    "test:debug": "npx playwright test --headed --debug",
+    "report": "npx playwright show-report"
+  },
+  "keywords": ["playwright", "enrollment", "testing"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.51.1",
+    "@types/node": "^25.2.2"
+  },
+  "dependencies": {
+    "googleapis": "^148.0.0"
+  }
+}

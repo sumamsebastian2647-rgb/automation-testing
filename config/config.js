@@ -1,0 +1,231 @@
+// Unified config.js for all enrollment types
+
+const generateUsers = (count = 5) => {
+  const users = {};
+  const baseTimestamp = Date.now().toString().slice(-5);
+
+  for (let i = 1; i <= count; i++) {
+    const suffix = i.toString().padStart(2, '0');
+    const uniqueTag = `${suffix}_${baseTimestamp}`;
+    const username = `userAT${uniqueTag}`;
+    const email = `${username}@mailinator.com`;
+
+    users[`personal${i}`] = {
+      title: 'Mrs',
+      firstName: username,
+      lastName: 'Test',
+      dob: '04-12-1994',
+      gender: 'Female',
+      phone: '0000000000',
+      email,
+      username,
+    };
+  }
+
+  return users;
+};
+
+const config = {
+  // Credentials - switch between environments as needed
+  credentials: {
+    baseUrl: 'https://rto2503.cloudemy.au/site/login',
+    username: 'rto2503',
+    password: 'Rto@2024$',
+  },
+  
+  timeouts: {
+    short: 500,
+    medium: 1000,
+    long: 10000,
+  },
+  
+  user: {
+    name: 'Ali Kadri',
+  },
+  
+  ...generateUsers(5),
+  
+  residential: {
+    building: 'Sampleflat',
+    unit: 'flat',
+    streetNo: '123',
+    streetName: 'test street',
+    poBox: '124',
+    suburb: 'syd',
+    suburbSelect: 'Sydney/1021/NSW',
+    state: 'New South Wales (NSW)',
+    country: 'Australia',
+  },
+  
+  contact: {
+    homePhone: '0000000000000',
+    workPhone: '000000000000000000',
+    emergencyName: 'Sample1',
+    relationship: 'Self',
+    emergencyPhone: '1111111111',  
+    emergencyEmail: 'testemergency@gmail.com',
+  },
+  
+  employer: {
+    abn: '40382360375',
+    contactName: 'testcontact',
+    contactEmail: 'testcontact@gmail.com',
+    contactPhone: '222222222',
+  },
+  
+  // New Enrollment Config
+  courselist: {
+    course1: 'Certificate II in Computer Assembly and Repair',
+    course2: 'Certificate I in Conservation and Ecosystem Management',
+    course3: 'Certificate III in Sports Turf Management',
+    course4: 'Aviation Operator Skill Set2024',
+  },
+  
+  generatelink: {
+    manualacceptancelink1: 'https://rto2503.cloudemy.au/forms?u=5a76e2d9',
+    manualacceptancelink2: 'https://rto2503.cloudemy.au/forms?u=64ff2bd0',
+    autoacceptancelink1: 'https://rto2503.cloudemy.au/forms?u=abc55588',
+    autoacceptancelink2: 'https://rto2503.cloudemy.au/forms?u=1b36df89',
+  },
+  
+  // Existing Enrollment Config
+  courselistexisting: {
+    course1_existing: 'Certificate I in Conservation and Ecosystem Management',
+    course2_existing: 'Certificate IV in Veterinary Nursing',
+    course3_existing: 'Aviation Operator Skill Set2024',
+    course4_existing: 'Certificate III in Sports Turf Management',
+  },
+  
+  generatelinkexisting: {
+    manualacceptancelink1_existing: 'https://rto2503.cloudemy.au/forms?u=a840fa1f',
+    manualacceptancelink2_existing: 'https://rto2503.cloudemy.au/forms?u=f35c8aa8',
+    autoacceptancelink1_existing: 'https://rto2503.cloudemy.au/forms?u=42681ad6',
+    autoacceptancelink2_existing: 'https://rto2503.cloudemy.au/forms?u=9df7ab23',
+  },
+  
+  // International Enrollment - uses same courselist but different links
+  generatelinkInternational: {
+    manualacceptancelink1: 'https://rto2503.cloudemy.au/forms?u=c80f49aa',
+    manualacceptancelink2: 'https://rto2503.cloudemy.au/forms?u=215a1e90',
+    autoacceptancelink1: 'https://rto2503.cloudemy.au/forms?u=15ccc673',
+    autoacceptancelink2: 'https://rto2503.cloudemy.au/forms?u=c0597fd2',
+  },
+  
+  preCourseEval: {
+    countryOfBirth: 'Australia',
+    cityOfBirth: 'testcity',
+    citizenshipCountry: 'Australia',
+    citizenshipStatus: 'Australian Citizen',
+    employmentStatus: '02',
+    occupation: 'Accommodation and Hospitality Managers (141000)',
+    industry: 'Accommodation (44)',
+    language: 'Aboriginal English, so',
+    englishProficiency: '2',
+    englishSupport: 'Y',
+    attendingSchool: '1',
+    highestSchoolLevel: '11',
+    schoolYear: '2006',
+    schoolName: 'testschool',
+    disabilityDetail: 'test test',
+    supportCategory: '08',
+  },
+  
+  identifiers: {
+    usi: '1111111111',
+    lui: '1111111111',
+    wrpn: '111111111',
+    sace: '1111111',
+    safework: '11111111111111',
+    vsn: '1111111',
+  },
+  
+  documents: {
+    driversFront: 'test1.pdf',
+    driversBack: 'test2.pdf',
+    concessionCard: 'health.jpg',
+    medicare: 'test4.pdf',
+    photo: 'photo.png',
+    other: 'test.pdf',
+  },
+  
+  // International specific configs
+  visa: {
+    nationality: 'Australia',
+    countryOfBirth: 'Australia',
+    cityOfBirth: 'Sydney',
+    firstLanguage: 'English',
+    passportNumber: 'A12345678',
+    holdAusVisa: true,
+    firstArrival: '01-01-2020',
+    visaType: '1',
+    visaTypeOther: '',
+    visaNumber: 'V123456789',
+    visaCopyPath: 'attachments/test1.pdf',
+    passportCopyPath: 'attachments/test2.pdf',
+    whereVisa: 'Australia',
+    requireOSHC: '1',
+    validOSHCPath: '',
+    requireAirport: true,
+    requireHomestay: false,
+    underEighteen: false,
+    borderProtection: true,
+  },
+  
+  englishProficiency1: {
+    ielts: { selected: true, score: '7.5' },
+    pte: { selected: false, score: '' },
+    cae: { selected: false, score: '' },
+    other: { selected: false, score: '' }
+  },
+  
+  previousStudies: {
+    studiedInAustralia: '1',
+    transferFromAnother: '1',
+    completeCourse: '0',
+    transcriptPath: '',
+    releaseLetter: '1',
+    releaseLetterPath: 'attachments/test.pdf',
+    highestQualificationAus: 'Certificate IV in Business',
+    highestQualificationOverseas: 'Bachelor of Commerce'
+  },
+  
+  employmentHistory: [
+    {
+      jobTitle: 'Customer Service Representative',
+      company: 'Service Solutions',
+      duration: '2021-2024',
+      contactPerson: 'Mary Anderson'
+    },
+    {
+      jobTitle: 'Sales Assistant',
+      company: 'Retail Store',
+      duration: '2019-2021',
+      contactPerson: 'Tom Wilson'
+    }
+  ],
+  
+  financialDeclaration: {
+    acknowledgeFinancialObligations: true
+  },
+  
+  agentRepresentative: {
+    agencyName: 'Premier Education Agency',
+    agencyEmail: 'contact@premieredu.com.au',
+    agencyAddress: '987 Flinders Street, Melbourne VIC 3000',
+    contactPerson: 'James Wilson',
+    contactNumber: '+61 3 5432 1098',
+    requiresSignature: true
+  },
+  
+  declaration: {
+    signerName: 'Test Automation',
+    signDate: '3',
+  },
+  
+  payment: {
+    mode: 'In person',
+    paymentDate: '3',
+  },
+};
+
+module.exports = { config };

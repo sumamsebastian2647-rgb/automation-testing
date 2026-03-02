@@ -1,0 +1,261 @@
+/**
+ * Shared enrollment steps - Common across all enrollment types
+ * These functions are identical for New, Existing, and International enrollments
+ * 
+ * @module steps/common/shared-steps
+ */
+
+const { config } = require('../../config/config.js');
+const { expect } = require('@playwright/test');
+
+/**
+ * Generates a personal details filler function for a given user
+ * @param {Object} personalData - User data from config (personal1, personal2, etc.)
+ * @returns {Function} Async function that fills personal details form
+ */
+function generatePersonalFiller(personalData) {
+  return async function (page) {
+    await page.getByRole('textbox', { name: 'First Name/Given Names *' }).waitFor({ timeout: 10000 });
+    await page.getByRole('combobox', { name: 'Title *' }).selectOption(personalData.title);
+    await page.getByRole('textbox', { name: 'First Name/Given Names *' }).fill(personalData.firstName);
+    await page.getByRole('textbox', { name: 'Middle Name' }).fill(personalData.middleName || '');
+    await page.getByRole('textbox', { name: 'Surname/Last Name *' }).fill(personalData.lastName);
+    await page.getByRole('textbox', { name: 'Date of Birth *' }).fill(personalData.dob);
+    await page.getByText(personalData.gender).click();
+    await page.getByRole('textbox', { name: 'Mobile Phone *' }).fill(personalData.phone);
+    await page.getByRole('textbox', { name: /^Email\b/i }).fill(personalData.email);
+    await page.getByRole('textbox', { name: /^Confirm Email\b/i }).fill(personalData.email);
+    await page.getByRole('textbox', { name: 'Username *' }).fill(personalData.username);
+    await page.getByLabel(personalData.gender).check();
+    await page.getByRole('button', { name: 'Next' }).click();
+    await page.setInputFiles('#fileStudentPhotoUpload', 'attachments/' + config.documents.photo);
+  };
+}
+
+// Pre-generated personal detail fillers for convenience
+const fillPersonalDetails1 = generatePersonalFiller(config.personal1);
+const fillPersonalDetails2 = generatePersonalFiller(config.personal2);
+const fillPersonalDetails3 = generatePersonalFiller(config.personal3);
+const fillPersonalDetails4 = generatePersonalFiller(config.personal4);
+const fillPersonalDetails5 = generatePersonalFiller(config.personal5);
+
+/**
+ * Fills residential address details form
+ * @param {import('@playwright/test').Page} page - Playwright page object
+ * @returns {Promise<void>}
+ */
+async function fillResidentialDetails(page) {
+  const { residential } = config;
+  await page.waitForTimeout(10000);
+  await page.getByRole('textbox', { name: 'Building Name' }).fill(residential.building);
+  await page.locator('#txtFlatUnit').fill(residential.unit);
+  await page.locator('#txtStreetNo').fill(residential.streetNo);
+  await page.getByRole('textbox', { name: 'Street name *' }).fill(residential.streetName);
+  await page.locator('input[name="txtPoBox"]').fill(residential.poBox);
+  await page.getByRole('textbox', { name: 'Suburb *' }).fill(residential.suburb);
+  await page.getByText(residential.suburbSelect).click({force: true});
+  await page.locator('#select2-txtStateterritory-container').click();
+  await page.getByRole('option', { name: residential.state }).click();
+  await page.locator('#select2-txtCountry-container').click();
+  await page.getByRole('option', { name: residential.country, exact: true }).click();
+  await page.getByRole('link', { name: 'Same as Above' }).click();
+  await page.getByRole('button', { name: 'Next' }).click();
+}
+
+/**
+ * Fills contact information and emergency contact details
+ * @param {import('@playwright/test').Page} page - Playwright page object
+ * @returns {Promise<void>}
+ */
+async function fillContactInformation(page) {
+  const c = config.contact;
+  await page.getByRole('textbox', { name: 'Home Phone' }).fill(c.homePhone);
+  await page.getByRole('textbox', { name: 'Work Phone' }).fill(c.workPhone);
+  await page.getByRole('textbox', { name: 'Emergency Contact Name' }).fill(c.emergencyName);
+  await page.getByRole('textbox', { name: 'Relationship' }).fill(c.relationship);
+  await page.getByRole('textbox', { name: 'Emergency Contact Number' }).fill(c.emergencyPhone);
+  await page.getByRole('textbox', { name: 'Emergency Contact Email' }).fill(c.emergencyEmail);
+  await page.getByRole('button', { name: 'Next' }).click();
+}
+
+/**
+ * Fills employer details form
+ * @param {import('@playwright/test').Page} page - Playwright page object
+ * @returns {Promise<void>}
+ */
+async function fillEmployerDetails(page) {
+  const e = config.employer;
+  await page.getByRole('textbox', { name: /Australian Business Number/i }).fill(e.abn);
+  await page.getByRole('button', { name: 'Search' }).click();
+  await page.waitForTimeout(config.timeouts.medium);
+  await page.getByRole('textbox', { name: 'Contact Person Name' }).fill(e.contactName);
+  await page.getByRole('textbox', { name: 'Contact Person Email' }).fill(e.contactEmail);
+  await page.getByRole('textbox', { name: 'Contact Person Phone Number' }).fill(e.contactPhone);
+  await page.getByRole('button', { name: 'Next' }).click();
+}
+
+/**
+ * Fills pre-course evaluation form
+ * @param {import('@playwright/test').Page} page - Playwright page object
+ * @returns {Promise<void>}
+ */
+async function fillPreCourseEvaluation(page) {
+  const p = config.preCourseEval;
+  await page.locator('#Step5 > div > div > .select2 > .selection > .select2-selection > .select2-selection__arrow > b').first().click();
+  await page.getByRole('option', { name: 'Australia', exact: true }).click();
+  await page.getByRole('textbox', { name: 'City of Birth' }).click();
+  await page.getByRole('textbox', { name: 'City of Birth' }).fill('sydney');
+  await page.locator('div:nth-child(3) > div > .select2 > .selection > .select2-selection > .select2-selection__arrow > b').first().click();
+  await page.getByRole('option', { name: 'Australia', exact: true }).click();
+  await page.locator('div:nth-child(3) > div:nth-child(2) > .select2 > .selection > .select2-selection > .select2-selection__arrow > b').click();
+  await page.getByRole('option', { name: 'Australian Citizen' }).click();
+  await page.locator('.block > .iradio_flat-red > .iCheck-helper').first().click();
+  await page.getByLabel('Employment Status', { exact: true }).selectOption('01');
+  await page.locator('#Step5 > div:nth-child(5) > div > .select2 > .selection > .select2-selection > .select2-selection__arrow').first().click();
+  await page.getByRole('option', { name: 'Aboriginal and Torres Strait Islander Education Worker (422111)' }).click();
+  await page.locator('#Step5 > div:nth-child(5) > div:nth-child(2) > .select2 > .selection > .select2-selection > .select2-selection__arrow > b').click();
+  await page.getByRole('option', { name: 'Accommodation (44)' }).click();
+  await page.getByLabel('', { exact: true }).locator('b').click();
+  await page.getByRole('option', { name: 'AUSTRALIAN INDIGENOUS LANGUAGES', exact: true }).click();
+  await page.getByLabel('Proficiency in English?').selectOption('1');
+  await page.getByLabel('English Support?').selectOption('Y');
+  await page.getByLabel('Attending school?').selectOption('1');
+  await page.getByRole('textbox', { name: 'School Name *' }).click();
+  await page.getByRole('textbox', { name: 'School Name *' }).fill('test');
+  await page.getByLabel('Highest Completed School Level').selectOption('12');
+  await page.getByRole('spinbutton', { name: 'Completion year' }).click();
+  await page.getByRole('spinbutton', { name: 'Completion year' }).fill('2000');
+  await page.getByText('Attending school? Yes No School Name * Highest Completed School Level Completed').click();
+  await page.locator('#Step5').getByText('Not Specified', { exact: true }).nth(2).click();
+  await page.locator('.txtPriorEducationFlag > .iradio_flat-red > .iCheck-helper').first().click();
+  await page.locator('#txtCurrentlyEnrolled').locator('xpath=following-sibling::span').click();
+  await page.keyboard.press('ArrowDown');
+  await page.keyboard.press('Enter');
+  await page.locator('//label[contains(.,"Have you previously completed a qualification funded under the JobTrainer Fund?")]/following-sibling::div//label[.//text()[contains(.,"No")]]').click();
+  await page.locator('input[name="txtJobSeeker"][value="1"]').locator('xpath=ancestor::label').click();
+  await page.locator('input[name="txtJobEvidenceType[]"][value="1"]').locator('xpath=ancestor::label').click();
+  await page.setInputFiles('#fileEvidenceTrainerFund', 'attachments/' + config.documents.concessionCard);
+  await page.locator('input[name="txtSchoolLeaver"][value="1"]').locator('xpath=ancestor::label').click();
+  await page.selectOption('#txtReason', {label: 'To get a job (01)'});
+  await page.getByRole('button', { name: 'Next' }).click();
+}
+
+/**
+ * Fills RPL (Recognition of Prior Learning) information
+ * @param {import('@playwright/test').Page} page - Playwright page object
+ * @returns {Promise<void>}
+ */
+async function rpl(page) {
+  await page.waitForTimeout(config.timeouts.long);
+  await page.getByRole('insertion').first().click();
+  await page.getByRole('insertion').nth(3).click();
+  await page.getByRole('button', { name: 'Next' }).click();
+  await page.waitForTimeout(config.timeouts.short);
+}
+
+/**
+ * Fills student identifier fields (USI, LUI, etc.)
+ * @param {import('@playwright/test').Page} page - Playwright page object
+ * @returns {Promise<void>}
+ */
+async function fillStudentIdentifiers(page) {
+  const i = config.identifiers;
+  await page.getByRole('textbox', { name: 'Unique Student Identifier' }).click();
+  await page.getByRole('textbox', { name: 'Unique Student Identifier' }).fill(i.usi);
+  await page.getByRole('textbox', { name: 'Learner Unique Identifier' }).click();
+  await page.getByRole('textbox', { name: 'Learner Unique Identifier' }).fill(i.lui);
+  await page.getByRole('textbox', { name: 'WorkReady Participant Number' }).click();
+  await page.getByRole('textbox', { name: 'WorkReady Participant Number' }).fill(i.wrpn);
+  await page.getByRole('textbox', { name: 'SACE Student ID' }).click();
+  await page.getByRole('textbox', { name: 'SACE Student ID' }).fill(i.sace);
+  await page.getByRole('textbox', { name: 'SafeworkSA ID' }).click();
+  await page.getByRole('textbox', { name: 'SafeworkSA ID' }).fill(i.safework);
+  await page.getByRole('textbox', { name: 'Victorian Student Number' }).click();
+  await page.getByRole('textbox', { name: 'Victorian Student Number' }).fill(i.vsn);
+  await page.getByRole('button', { name: 'Next' }).click();
+  await page.waitForTimeout(1000);
+}
+
+/**
+ * Uploads required documents
+ * @param {import('@playwright/test').Page} page - Playwright page object
+ * @returns {Promise<void>}
+ */
+async function uploadDocuments(page) {
+  const d = config.documents;
+  await page.waitForTimeout(config.timeouts.short);
+  await page.getByLabel('Australian Drivers Licence Front').setInputFiles('attachments/' + d.driversFront);
+  await page.getByLabel('Australian Drivers Licence Back').setInputFiles('attachments/' + d.driversBack);
+  await page.getByLabel('Concession Cards (Health card').setInputFiles('attachments/' + d.concessionCard);
+  await page.getByLabel('Medicare Card').setInputFiles('attachments/' + d.medicare);
+  await page.getByLabel('Your Photo').setInputFiles('attachments/' + d.photo);
+  await page.getByLabel('Any other document').setInputFiles('attachments/' + d.other);
+  await page.getByRole('button', { name: 'Next' }).click();
+  await page.waitForTimeout(1000);
+}
+
+/**
+ * Fills declaration and signature
+ * @param {import('@playwright/test').Page} page - Playwright page object
+ * @returns {Promise<void>}
+ */
+async function fillDeclarationAndSignature(page) {
+  await page.locator('#signature-pad').click({
+    position: { x: 97, y: 109 }
+  });
+  await page.waitForTimeout(config.timeouts.short);
+  await page.getByRole('textbox', { name: 'Name *' }).click();
+  await page.getByRole('textbox', { name: 'Name *' }).fill(config.declaration.signerName);
+  await page.getByRole('textbox', { name: 'Date *' }).click();
+  await page.getByRole('link', { name: String(new Date().getDate()), exact: true }).click();
+  await page.waitForTimeout(config.timeouts.short);
+  await page.getByRole('button', { name: 'Next' }).click();
+  await page.waitForTimeout(1000);
+}
+
+/**
+ * Completes payment - Paid/Free option
+ * @param {import('@playwright/test').Page} page - Playwright page object
+ * @returns {Promise<void>}
+ */
+async function completePayment_paid(page) {
+  await page.getByText('Paid / Free').click();
+  await page.locator('label').filter({ hasText: 'In person' }).getByRole('insertion').click();
+  await page.getByRole('textbox', { name: 'Payment date *' }).click();
+  await page.getByRole('link', { name: String(new Date().getDate()), exact: true }).click();
+  await page.locator('#btnSave').click({ noWaitAfter: true });
+}
+
+/**
+ * Completes payment - Pay Later option
+ * @param {import('@playwright/test').Page} page - Playwright page object
+ * @returns {Promise<void>}
+ */
+async function completePayment_unpaid(page) {
+  await page.locator('label').filter({ hasText: 'Pay Later' }).getByRole('insertion').click();
+  await page.locator('#btnSave').click({ noWaitAfter: true });
+}
+
+module.exports = {
+  // Personal details
+  generatePersonalFiller,
+  fillPersonalDetails1,
+  fillPersonalDetails2,
+  fillPersonalDetails3,
+  fillPersonalDetails4,
+  fillPersonalDetails5,
+  
+  // Form steps
+  fillResidentialDetails,
+  fillContactInformation,
+  fillEmployerDetails,
+  fillPreCourseEvaluation,
+  rpl,
+  fillStudentIdentifiers,
+  uploadDocuments,
+  fillDeclarationAndSignature,
+  
+  // Payment
+  completePayment_paid,
+  completePayment_unpaid
+};
