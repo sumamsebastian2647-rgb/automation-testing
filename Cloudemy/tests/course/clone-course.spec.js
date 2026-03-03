@@ -21,11 +21,7 @@ test.describe('@course @clone Clone Course Module', () => {
     return { dashboardPage };
   }
 
-  // ==============================
-  // 🔥 SMOKE TEST
-  // ==============================
-
-  test('@smoke clone first course, verify copy suffix, save, and verify in list', async ({ page }) => {
+  test('@regression clone first course, verify copy suffix, save, and verify in list', async ({ page }) => {
     const { dashboardPage } = await openCloneCourseForm(page);
 
     const clonedCode = await page.locator('#course-c_code').inputValue();
