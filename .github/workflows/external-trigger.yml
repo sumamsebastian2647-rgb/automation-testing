@@ -1,4 +1,4 @@
-name: Smoke Tests (Triggered From Dev Repo)
+name: Cloudemy Smoke Tests
 
 on:
   repository_dispatch:
