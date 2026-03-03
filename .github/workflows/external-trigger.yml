@@ -1,12 +1,6 @@
-name: Smoke Tests (PR + External)
+name: Smoke Tests (External Only)
 
 on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - "Cloudemy/**"
-
   repository_dispatch:
     types: [run-cloudemy-smoke]
 
