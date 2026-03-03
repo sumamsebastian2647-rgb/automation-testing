@@ -22,7 +22,7 @@ test.describe('@competency Create Competency Module', () => {
     return { dashboardPage };
   }
   
-  test('@smoke Create a clustered competency with two existing competencies', async ({ page }) => {
+  test('@regression Create a clustered competency with two existing competencies', async ({ page }) => {
     const { dashboardPage } = await openCreateCompetencyForm(page);
     const filePath1 = path.join(process.cwd(),config.createCompetencyData.folder,config.createCompetencyData.learningMaterial);
     const filePath2 = path.join(process.cwd(),config.createCompetencyData.folder,config.createCompetencyData.scormMaterial);
