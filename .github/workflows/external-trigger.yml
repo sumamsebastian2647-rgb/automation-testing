@@ -1,9 +1,8 @@
-name: Smoke Tests (External Only)
+name: Smoke Tests (Triggered From Dev Repo)
 
 on:
-  pull_request:
-    branches:
-      - main
+  repository_dispatch:
+    types: [run-cloudemy-smoke]
 
 jobs:
   smoke-test:
@@ -11,11 +10,9 @@ jobs:
 
     permissions:
       contents: read
-      checks: write
-      pull-requests: write
 
     steps:
-      - name: Checkout Code
+      - name: Checkout Automation Code
         uses: actions/checkout@v4
 
       - name: Setup Node
@@ -34,6 +31,7 @@ jobs:
           npx playwright install --with-deps
 
       - name: Run Smoke Tests
+        id: smoke
         run: |
           cd Cloudemy
           npx playwright test --grep "@smoke"
@@ -44,3 +42,22 @@ jobs:
         with:
           name: smoke-report
           path: Cloudemy/playwright-report/
+
+      # 🔥 VERY IMPORTANT STEP
+      - name: Update Commit Status in Dev Repo
+        if: always()
+        run: |
+          STATUS="success"
+          if [ "${{ job.status }}" != "success" ]; then
+            STATUS="failure"
+          fi
+
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/${{ github.event.client_payload.repo }}/statuses/${{ github.event.client_payload.sha }} \
+            -d "{
+              \"state\": \"${STATUS}\",
+              \"context\": \"Cloudemy Smoke Tests\",
+              \"description\": \"Smoke test result from automation repo\"
+            }"
