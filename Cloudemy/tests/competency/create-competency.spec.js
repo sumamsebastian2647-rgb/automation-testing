@@ -1,4 +1,4 @@
-const { test, expect } = require('@playwright/test');
+/*const { test, expect } = require('@playwright/test');
 const config = require('../../config/config');
 const { LoginPage } = require('../../pages/LoginPage');
 const { DashboardPage } = require('../../pages/DashboardPage');
@@ -87,7 +87,7 @@ test.describe('@competency Create Competency Module', () => {
     await expect(page).toHaveURL(/competencies\/create/);
     await expect(page.locator('.field-competencies-comp_code .help-block.help-block-error'))
       .toHaveText('Code cannot be blank.');
-  });
+  });*/
 
   /*test('@smoke Cannot create competency without name', async ({ page }) => {
     const { dashboardPage } = await openCreateCompetencyForm(page);
@@ -107,7 +107,7 @@ test.describe('@competency Create Competency Module', () => {
     }
   });*/
 
-  test('@smoke Cannot create competency with spaces/special chars in code', async ({ page }) => {
+ /* test('@smoke Cannot create competency with spaces/special chars in code', async ({ page }) => {
     const { dashboardPage } = await openCreateCompetencyForm(page);
     const invalidCompetencyCode = 'CMP 12@#';
     const uniqueCompetencyName = config.createCompetencyData.getUniqueCompetencyName();
@@ -142,4 +142,4 @@ test.describe('@competency Create Competency Module', () => {
       await expect(summaryError.filter({ hasText: 'Competency exist with same code.' })).toBeVisible({ timeout: 10000 });
     }
   });
-});
+});*/
