@@ -1,3 +1,4 @@
+const path = require('path');
 module.exports = {
   credentials: {
     baseURL: 'https://rto2503.cloudemy.au/site/login',
@@ -53,7 +54,77 @@ module.exports = {
     carbonFarming: 'AHCSS00085 - Carbon Farming',
     diplomaLifeCoaching: 'General Knowledge Course 10883NAT - Diploma of Life Coaching',
     certificateIV: 'CHC42912 - Certificate IV in'
+  },
+   assessment: {
+    questionTitles: {
+      essay: 'Explain the importance of workplace safety procedures.',
+      form: 'Describe the steps involved in effective customer communication.',
+      audio: 'Record your explanation about handling workplace conflict.',
+      video: 'Provide a video explanation of customer service best practices.'
+    },
+    modelAnswers: {
+      essay: `Workplace safety procedures are essential to ensure a safe and healthy working environment.
+They help prevent accidents, injuries, and health hazards.
+Following safety protocols improves productivity and ensures compliance with workplace regulations.`
+    },
+    file: {
+      sampleFile: path.join(__dirname, '../files/test.pdf')
+    },
+  },
+  testData: {
+    questions: {
+      multipleChoice: {
+        question: "Explain multiple choice question?",
+        correctFeedback: "Correct answer selected",
+        wrongFeedback: "Wrong answer selected",
+        answer: "Option 1",
+        options1: "Option 1",
+        option2: "Option 2"
+      },
+
+      shortAnswer: {
+        question: "Explain short answer question?",
+        correctFeedback: "Correct short answer",
+        wrongFeedback: "Incorrect short answer",
+        answer: "Short Answer Example"
+      },
+
+      fillInBlank: {
+        question: "Fill in the blank question ____",
+        correctFeedback: "Correct fill",
+        wrongFeedback: "Wrong fill",
+        answer: "Blank Answer"
+      },
+
+      smartFillInBlank: {
+        question: "Smart fill in the blank ____",
+        correctFeedback: "Correct smart fill",
+        wrongFeedback: "Wrong smart fill",
+        answer: "Smart Answer"
+      },
+
+      trueFalse: {
+        question: "True or False Question?",
+        correctFeedback: "Correct True/False",
+        wrongFeedback: "Wrong True/False",
+        answer: "True"
+      },
+
+      matching: {
+        question: "Match the following",
+        correctFeedback: "Correct matching",
+        wrongFeedback: "Wrong matching",
+        answer: "Item A - Option A"
+      },
+
+      dragAndDrop: {
+        question: "Drag and Drop Question",
+        correctFeedback: "Correct drag",
+        wrongFeedback: "Wrong drag",
+        answer: "Drag Item"
+      }
+    }
   }
-  
+
 };
  
