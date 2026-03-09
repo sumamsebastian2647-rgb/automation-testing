@@ -32,11 +32,11 @@ test.describe('@assessment @smoke Create Assessment LQ', () => {
      await expect(page).toHaveURL(/updatelongquestion\?id=\d+/);
      console.log('LQ Assessment created successfully');
      await dashboardPage.clickManageQuestions();
-    await dashboardPage.addQuestionType('Essay Type Question');
-    await dashboardPage.enterQuestionTitle(config.assessment.questionTitles.essay);
-    await dashboardPage.enterModelAnswer(config.assessment.modelAnswers.essay);
-    await dashboardPage.uploadQuestionFile(config.assessment.file.sampleFile);
-    await dashboardPage.saveQuestionAndVerifySuccess();
+     await dashboardPage.addQuestionType('Essay Type Question');
+     await dashboardPage.enterQuestionTitle(config.assessment.questionTitles.essay);
+     await dashboardPage.enterModelAnswer(config.assessment.modelAnswers.essay);
+     await dashboardPage.uploadQuestionFile(config.assessment.file.sampleFile);
+     await dashboardPage.saveQuestionAndVerifySuccess();
      console.log('Essay question added successfully');
      await dashboardPage.clickSave();
     
