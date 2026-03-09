@@ -26,4 +26,13 @@ jobs:
       - name: Run Assessment Tests
         run: npx playwright test tests/assessment
         working-directory: Cloudemy
-
+      - name: Run Assessment Tests
+        run: npx playwright test tests/assessment
+        working-directory: Cloudemy
+      
+      - name: Upload Playwright Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: Cloudemy/playwright-report/
