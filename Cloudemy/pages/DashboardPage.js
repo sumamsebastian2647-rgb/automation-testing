@@ -8,6 +8,7 @@ class DashboardPage {
     this.courseManagementMenu = page.locator('#course_management > a');
     this.courselist = page.locator('#course_management ul.treeview-menu a[href="/course/index"]');
     this.competencyList = page.locator('#course_management ul.treeview-menu a[href="/competencies/index"]');
+    this.assessmentList = page.locator('#course_management ul.treeview-menu a[href="/assessments/index"]');
     // --- SEARCH FILTERS ---
     this.categorySelect = page.getByLabel('Category');
     this.codeInput = page.getByLabel('Code');
@@ -74,6 +75,7 @@ class DashboardPage {
     this.competencySearchCodeInput = page.locator('input[name="CompetenciesSearch[comp_code]"]').filter({ visible: true });
     this.competencySearchNameInput = page.locator('input[name="CompetenciesSearch[comp_name]"]').filter({ visible: true });
    this.checklistRows = page.locator('#rplActivityChecklist table tbody tr:not(#new-checklist-template)');
+   this.assessmentSuccessToastCombined = page.getByText(/Well Done![\s\S]*Record has been saved.\./i);
    this.checklistInputs = this.checklistRows.locator(
 'input[name="CompetencyRplChecklist[new_checklist][]"]'
 );
@@ -135,37 +137,28 @@ class DashboardPage {
   async navigateToCompetencyList() {
     await this.page.waitForSelector('#course_management', { timeout: 20000 });
     const courseManagementContainer = this.page.locator('#course_management');
-
     await expect(this.courseManagementMenu).toBeVisible({ timeout: 15000 });
-
     for (let attempt = 1; attempt <= 2; attempt++) {
       const menuExpanded = await courseManagementContainer.evaluate(el =>
         el.classList.contains('menu-open')
       );
-
       if (menuExpanded) break;
-
       await this.courseManagementMenu.scrollIntoViewIfNeeded();
       await this.courseManagementMenu.click({ force: true });
       await this.page.waitForTimeout(800);
-
       const nowExpanded = await courseManagementContainer.evaluate(el =>
         el.classList.contains('menu-open')
       );
-
       if (nowExpanded) break;
-
       if (attempt === 2)
         throw new Error('❌ Failed to expand Course Management menu.');
     }
-
     await this.page.waitForFunction(() => {
       const el = document.querySelector(
         '#course_management ul.treeview-menu a[href="/competencies/index"]'
       );
       return el && el.offsetParent !== null;
     }, { timeout: 10000 });
-
     await this.competencyList.first().click({ force: true });
     await this.page.waitForURL(/competencies\/index/, { timeout: 10000 });
   }
@@ -448,14 +441,11 @@ async openFirstCourseForEditFromList() {
 async openFirstCourseForCloneFromList() {
   await expect(this.firstCourseCloneButton).toBeVisible({ timeout: 10000 });
   await this.firstCourseCloneButton.click();
-
   // Clone action opens a confirmation dialog first
   await expect(this.confirmCloneButton).toBeVisible({ timeout: 10000 });
   await this.confirmCloneButton.click();
-
   // Clone toast appears before clone form is shown
   await expect(this.cloneSuccessToast).toBeVisible({ timeout: 15000 });
-
   // After confirmation, clone form loads with copied values
   await this.page.waitForURL(/course\/(create|update\?id=\d+)/, { timeout: 15000 });
   await expect(this.createCourseCodeInput).toBeVisible({ timeout: 15000 });
@@ -618,7 +608,6 @@ async selectElectiveCompetenciesFourToSix() {
       return false;
     }
   }
-
   async verifyCourseByName(courseName) {
     const matches = await this.page
       .locator('.box')
@@ -632,7 +621,6 @@ async selectElectiveCompetenciesFourToSix() {
       return false;
     }
   }
-
   async openCourseByType(courseName) {
     const course = this.page
       .locator('.box .label.label-info')
@@ -646,14 +634,163 @@ async selectElectiveCompetenciesFourToSix() {
     await course.click();
     await this.page.waitForLoadState('networkidle');
   }
-
   async reset() {
     await this.resetBtn.click();
   }
-
   async clickBack() {
     await this.backBtn.click();
   }
+  //////////////////////////////assessment page functions
+ 
+   async navigateToAssessmentList() {
+    await this.page.waitForSelector('#course_management', { timeout: 20000 });
+    const courseManagementContainer = this.page.locator('#course_management');
+    await expect(this.courseManagementMenu).toBeVisible({ timeout: 15000 });
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      const menuExpanded = await courseManagementContainer.evaluate(el =>
+        el.classList.contains('menu-open')
+      );
+      if (menuExpanded) break;
+      await this.courseManagementMenu.scrollIntoViewIfNeeded();
+      await this.courseManagementMenu.click({ force: true });
+      await this.page.waitForTimeout(800);
+      const nowExpanded = await courseManagementContainer.evaluate(el =>
+        el.classList.contains('menu-open')
+      );
+      if (nowExpanded) break;
+      if (attempt === 2)
+        throw new Error('❌ Failed to expand Course Management menu.');
+    }
+    await this.page.waitForFunction(() => {
+      const el = document.querySelector(
+        '#course_management ul.treeview-menu a[href="/assessments/index"]'
+      );
+      return el && el.offsetParent !== null;
+    }, { timeout: 10000 });
+    await this.assessmentList.first().click({ force: true });
+    await this.page.waitForURL(/assessments\/index/, { timeout: 10000 });
+  }
+  async  clickCreateAssessment() {
+  await this.page.getByRole('link', { name: 'Create Assessment' }).waitFor({ timeout: 10000 });
+  await this.page.getByRole('link', { name: 'Create Assessment' }).click();
+  // Optional: wait for navigation
+  await this.page.waitForURL('**/assessments/selecttype');
+  }
+  async selectAssessmentType(type) {
+  await this.page.locator(`a[href="${type}"]`).click();
+  }
+  async selectFirstCompetency() {
+    await this.page.locator('#select2-assessments-ass_comp_id-container').click();
+    await this.page.locator('.select2-results__option').first().waitFor();
+    await this.page.locator('.select2-results__option').first().click();
+  }
+  generateUniqueValue(prefix) {
+    return `${prefix}-${Date.now()}`;
+  }
+  async enterAssessmentCode(prefix = 'ASS') {
+    const code = this.generateUniqueValue(prefix);
+    await this.page.locator('#assessments-ass_code').fill(code);
+    return code;
+  }
+  async enterAssessmentName(prefix = 'Assessment') {
+    const name = this.generateUniqueValue(prefix);
+    await this.page.locator('#assessments-ass_name').fill(name);
+    return name;
+  }
+  async enterInstruction(text) {
+  const editor = this.page.locator(
+    '.field-assessments-ass_description .redactor-editor'
+  );
+
+  await editor.click();
+  await editor.fill(text);
+}
+  async saveAssessmentAndVerifySuccess() {
+  await this.clickSaveCompetency();
+  await expect(this.page).toHaveURL(/updatelongquestion\?id=\d+/);
+  await expect(this.page.locator('#assessments-ass_code')).toBeVisible();
+}
+async clickManageQuestions() {
+  await this.page.getByTitle('Manage Questions').click();
+}
+async openCreateQuestionsDropdown() {
+  await this.page.getByRole('button', { name: /Create Questions/i }).click();
+}
+
+async addQuestionType(type) {
+  await this.openCreateQuestionsDropdown();
+  await this.page.getByRole('link', { name: type }).click();
+}
+
+async enterQuestionTitle(title) {
+  const textarea = this.page.locator('#questions-ques_title');
+
+  await textarea.waitFor({ state: 'attached' });
+
+  await textarea.evaluate((el, value) => {
+    el.value = value;
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+  }, title);
+}
+async enterModelAnswer(answer) {
+  const textarea = this.page.locator('#questions-ques_model_answer');
+
+  await textarea.waitFor({ state: 'attached' });
+
+  await textarea.evaluate((el, value) => {
+    el.value = value;
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+  }, answer);
+}
+async uploadQuestionFile(filePath) {
+  await this.page.setInputFiles('#questions-upload_file', filePath);
+}
+ async saveQuestionAndVerifySuccess() {
+  await this.clickSaveCompetency();
+  // verify page reload with same question page
+  await expect(this.page).toHaveURL(/questions\/longquestion\?id=\d+/);
+  // verify form still visible (means save succeeded)
+  //await expect(this.page.locator('#questions-ques_title')).toBeVisible();
+}
+async clickSave() {
+  const saveButton = this.page.locator('.box-footer button:has-text("Save")');
+
+  await saveButton.click();
+
+  await this.page.waitForLoadState('domcontentloaded');
+}
+async clickManageQuestionsPQ() {
+  await this.page.getByTitle('Manage Observations').click();
+}
+async clickAddPracticalObservation() {
+  await this.page.getByRole('link', { name: 'Add Practical Observation' }).click();
+}
+ async saveQuestionAndVerifySuccesspq() {
+  await this.clickSaveCompetency();
+  // verify page reload with same question page
+  await expect(this.page).toHaveURL(/questions\/workplacepractical\?id=\d+/);
+  // verify form still visible (means save succeeded)
+  //await expect(this.page.locator('#questions-ques_title')).toBeVisible();
+}
+async saveAssessmentAndVerifySuccesspq() {
+  await this.clickSaveCompetency();
+  await expect(this.page).toHaveURL(/updateworkplacepractical\?id=\d+/);
+  await expect(this.page.locator('#assessments-ass_code')).toBeVisible();
+}
+async saveQuestionAndVerifySuccessaq() {
+  await this.clickSaveCompetency();
+  // verify page reload with same question page
+  await expect(this.page).toHaveURL(/questions\/automaticquiz\?id=\d+/);
+  // verify form still visible (means save succeeded)
+  //await expect(this.page.locator('#questions-ques_title')).toBeVisible();
+}
+async saveAssessmentAndVerifySuccessaq() {
+  await this.clickSaveCompetency();
+  await expect(this.page).toHaveURL(/updateautomaticquiz\?id=\d+/);
+  await expect(this.page.locator('#assessments-ass_code')).toBeVisible();
+}
 }
 
 module.exports = { DashboardPage };
