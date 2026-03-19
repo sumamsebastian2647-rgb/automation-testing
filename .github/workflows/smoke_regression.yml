@@ -1,4 +1,4 @@
-name: Cloudemy Tests
+name: Cloudemy Tests(smoke+regression)
 
 on:
   workflow_dispatch:
