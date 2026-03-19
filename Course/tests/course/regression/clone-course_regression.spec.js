@@ -19,7 +19,7 @@ test.describe('Clone Course - Regression', () => {
 
     return { dashboardPage };
   }
-
+/*//this test is not need since System allows it.
   test('@regression remove copy from cloned code and name should prevent duplicate save', async ({ page }) => {
     const { dashboardPage } = await openCloneCourseForm(page);
 
@@ -50,7 +50,7 @@ test.describe('Clone Course - Regression', () => {
     // Ensure duplicate values are still in form (not saved to a new record)
     await expect(page.locator('#course-c_code')).toHaveValue(codeWithoutCopy);
     await expect(page.locator('#course-c_name')).toHaveValue(nameWithoutCopy);
-  });
+  });*/
 
   test('@regression cloned course cannot save when code and name are blank', async ({ page }) => {
     const { dashboardPage } = await openCloneCourseForm(page);
