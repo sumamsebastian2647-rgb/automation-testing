@@ -1,4 +1,4 @@
-/*const { test, expect } = require('@playwright/test');
+const { test, expect } = require('@playwright/test');
 const config = require('../../config/config');
 const { LoginPage } = require('../../pages/LoginPage');
 const { DashboardPage } = require('../../pages/DashboardPage');
@@ -22,7 +22,7 @@ test.describe('@competency Create Competency Module', () => {
     return { dashboardPage };
   }
 
-  test('@smoke Create Competency with unique code and name', async ({ page }) => {
+  test('@regression Create Competency with unique code and name', async ({ page }) => {
     const { dashboardPage } = await openCreateCompetencyForm(page);
     const uniqueCompetencyCode = config.createCompetencyData.getUniqueCompetencyCode();
     const uniqueCompetencyName = config.createCompetencyData.getUniqueCompetencyName();
@@ -77,7 +77,7 @@ test.describe('@competency Create Competency Module', () => {
     await expect(results.first()).toContainText(uniqueCompetencyName);
   });
 
-  test('@smoke Cannot create competency without code', async ({ page }) => {
+  test('@regression Cannot create competency without code', async ({ page }) => {
     const { dashboardPage } = await openCreateCompetencyForm(page);
     const uniqueCompetencyName = config.createCompetencyData.getUniqueCompetencyName();
 
@@ -87,9 +87,9 @@ test.describe('@competency Create Competency Module', () => {
     await expect(page).toHaveURL(/competencies\/create/);
     await expect(page.locator('.field-competencies-comp_code .help-block.help-block-error'))
       .toHaveText('Code cannot be blank.');
-  });*/
+  });
 
-  /*test('@smoke Cannot create competency without name', async ({ page }) => {
+  test('@regression Cannot create competency without name', async ({ page }) => {
     const { dashboardPage } = await openCreateCompetencyForm(page);
     const uniqueCompetencyCode = config.createCompetencyData.getUniqueCompetencyCode();
 
@@ -105,9 +105,9 @@ test.describe('@competency Create Competency Module', () => {
     } else {
       await expect(summaryError.filter({ hasText: 'Name cannot be blank.' })).toBeVisible({ timeout: 10000 });
     }
-  });*/
+  });
 
- /* test('@smoke Cannot create competency with spaces/special chars in code', async ({ page }) => {
+  test('@regression Cannot create competency with spaces/special chars in code', async ({ page }) => {
     const { dashboardPage } = await openCreateCompetencyForm(page);
     const invalidCompetencyCode = 'CMP 12@#';
     const uniqueCompetencyName = config.createCompetencyData.getUniqueCompetencyName();
@@ -119,7 +119,7 @@ test.describe('@competency Create Competency Module', () => {
       .toHaveText('Code can only contain letters, numbers, hyphens (-) and underscores (_). Spaces and special characters are not allowed.');
   });
 
-  test('@smoke Cannot create competency with duplicate code', async ({ page }) => {
+  test('@regression Cannot create competency with duplicate code', async ({ page }) => {
     const { dashboardPage } = await openCreateCompetencyForm(page);
     const duplicateCode = config.createCompetencyData.getUniqueCompetencyCode();
     const firstName = config.createCompetencyData.getUniqueCompetencyName();
@@ -142,4 +142,4 @@ test.describe('@competency Create Competency Module', () => {
       await expect(summaryError.filter({ hasText: 'Competency exist with same code.' })).toBeVisible({ timeout: 10000 });
     }
   });
-});*/
+});
