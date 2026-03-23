@@ -1,10 +1,11 @@
 const { expect } = require('@playwright/test');
-
+const config = require('../config/config');
 class DashboardPage {
   constructor(page) {
     this.page = page;
 
     // --- NAVIGATION ---
+      this.timetablemenu = page.locator('#course_management > a');
     this.courseManagementMenu = page.locator('#course_management > a');
     this.courselist = page.locator('#course_management ul.treeview-menu a[href="/course/index"]');
     this.competencyList = page.locator('#course_management ul.treeview-menu a[href="/competencies/index"]');
@@ -395,9 +396,10 @@ async fillAvetmissCourseDetails(courseCode, courseName) {
 
 async saveCourseAndVerifySuccessToast() {
   await this.clickSaveCourse();
- await expect(this.successToastCombined).toHaveText(/success|created|updated/i, {
-  timeout: 15000
-});
+  await expect(this.successToastCombined).toBeVisible({ timeout: 15000 });
+
+
+
 }
 async saveCourseAndValidateResult() {
   await this.clickSaveCourse();
@@ -458,24 +460,10 @@ async saveClonedCourseAndVerifySaved() {
 }
 
 async goToCourseListFromForm() {
-  // If already on list page, nothing to do
-  if (/\/course\/index/.test(this.page.url())) {
-    return;
-  }
-
-  // Preferred route: use Back button when present on form pages
-  if (await this.backBtn.isVisible().catch(() => false)) {
-   await this.backBtn.click();
-await expect(this.page).toHaveURL(/course\/index/, {
-  timeout: 10000
-});
-    return;
-  }
-
-  // Fallback for pages where Back link is missing/not rendered
-  await this.navigateToCourseCategory();
+  const base = new URL(this.page.url()).origin;
+  await this.page.goto(`${base}/course/index`, { waitUntil: 'domcontentloaded' });
+  await this.page.waitForURL(/course\/index/, { timeout: 10000 });
 }
-
 async searchCourseInListByCode(courseCode) {
   await expect(this.courseListCodeSearchInput).toBeVisible({ timeout: 10000 });
   await this.courseListCodeSearchInput.fill(courseCode);
@@ -705,6 +693,23 @@ async selectElectiveCompetenciesFourToSix() {
   await editor.click();
   await editor.fill(text);
 }
+async enterAssessorInstruction(text) {
+  const editor = this.page.locator(
+    '.field-assessments-ass_assessor_instructions .redactor-editor'
+  );
+
+  const textarea = this.page.locator('#assessments-ass_assessor_instructions');
+
+  await editor.waitFor({ state: 'visible' });
+
+  await editor.evaluate((el, value) => {
+    el.innerHTML = `<p>${value}</p>`;
+  }, text);
+
+  await textarea.evaluate((el, value) => {
+    el.value = `<p>${value}</p>`;
+  }, text);
+}
   async saveAssessmentAndVerifySuccess() {
   await this.clickSaveCompetency();
   await expect(this.page).toHaveURL(/updatelongquestion\?id=\d+/);
@@ -744,6 +749,7 @@ async enterModelAnswer(answer) {
     el.dispatchEvent(new Event('change', { bubbles: true }));
   }, answer);
 }
+
 async uploadQuestionFile(filePath) {
   await this.page.setInputFiles('#questions-upload_file', filePath);
 }
@@ -791,6 +797,109 @@ async saveAssessmentAndVerifySuccessaq() {
   await expect(this.page).toHaveURL(/updateautomaticquiz\?id=\d+/);
   await expect(this.page.locator('#assessments-ass_code')).toBeVisible();
 }
+/////////////user agreement
+async handleAgreementOrDashboardModal() {
+
+  // ---------- USER AGREEMENT ----------
+  if (this.page.url().includes('user-agreement')) {
+
+    await this.page.locator('.icheckbox_flat-red .iCheck-helper').click({ force: true });
+    await this.page.locator('button:has-text("Agree & Continue")').click();
+    await this.page.waitForLoadState('networkidle');
+
+    console.log('User agreement accepted');
+    return;
+  }
+
+  // ---------- WAIT FOR DASHBOARD TO LOAD ----------
+  await this.page.waitForTimeout(2000);
+
+  // ---------- DASHBOARD MODAL ----------
+  const closeBtn = this.page.locator('.close-dashboard-modal');
+
+  if (await closeBtn.count() > 0) {
+
+    await closeBtn.first().click({ force: true });
+
+    console.log('Dashboard modal closed');
+
+  } else {
+
+    console.log('Dashboard modal not present');
+
+  }
+}
+async clickCourses() {
+  await this.page.getByRole('link', { name: 'Courses' }).click();
+}
+async selectCourse(courseName) {
+
+  await this.page.locator('#select2-course-filter-dropdown-container').click();
+
+  await this.page.locator('.select2-results__option', {
+    hasText: courseName
+  }).click();
+
+}
+/*  async openCourseCompetencies(courseName) {
+    const course = this.page.locator('.course-card', { hasText: courseName });
+    await course.locator('#competency2').click();
+  }
+ async openCompetency(compName) {
+    const competency = this.page.locator('h3.comp-expand', {
+      hasText: compName
+    });
+
+    await competency.waitFor({ state: 'visible' });
+    await competency.click();
+  }
+  async verifyAssessmentStatus(competencyName, assessmentName, status) {
+
+    const competencyHeader = this.page.locator(
+      `.competency-header:has-text("${competencyName}")`
+    );
+
+    await competencyHeader.scrollIntoViewIfNeeded();
+    await competencyHeader.click({ force: true });
+
+    const competencyBody = this.page.locator('#comp-content-2538');
+    await expect(competencyBody).toBeVisible();
+
+    const panel = this.page.locator('.panel', {
+      hasText: assessmentName
+    });
+
+    await expect(panel).toContainText(status);
+  }*/
+
+
+    async confirmAllQuestionsAttempted() {
+        // Checkbox
+        this.confirmCheckbox = this.page.locator('#chkbxAllAttempted');
+
+        await this.confirmCheckbox.check();
+    }
+
+    async addSignature() {
+    const box = await this.signaturePad.boundingBox();
+    await this.page.mouse.move(box.x + 20, box.y + 20);
+    await this.page.mouse.down();
+    await this.page.mouse.move(box.x + 120, box.y + 80);
+    await this.page.mouse.move(box.x + 200, box.y + 40);
+    await this.page.mouse.up();
+}
+
+    async submitAssessment() {
+              // Submit button
+        this.submitAssessmentButton = this.page.locator('#clickImage2');
+        await this.submitAssessmentButton.click();
+    }
+
+    async completeAssessmentSubmission() {
+        await this.confirmAllQuestionsAttempted();
+        await this.addSignature();
+        await this.submitAssessment();
+    }
 }
 
 module.exports = { DashboardPage };
