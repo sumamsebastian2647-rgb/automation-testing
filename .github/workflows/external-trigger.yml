@@ -1,0 +1,63 @@
+name: Cloudemy Smoke Tests
+
+on:
+  repository_dispatch:
+    types: [run-cloudemy-smoke]
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout Automation Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: |
+          cd Cloudemy
+          npm install
+
+      - name: Install Playwright
+        run: |
+          cd Cloudemy
+          npx playwright install --with-deps
+
+      - name: Run Smoke Tests
+        id: smoke
+        run: |
+          cd Cloudemy
+          npx playwright test --grep "@smoke"
+
+      - name: Upload Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-report
+          path: Cloudemy/playwright-report/
+
+      # 🔥 VERY IMPORTANT STEP
+      - name: Update Commit Status in Dev Repo
+        if: always()
+        run: |
+          STATUS="success"
+          if [ "${{ job.status }}" != "success" ]; then
+            STATUS="failure"
+          fi
+
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/${{ github.event.client_payload.repo }}/statuses/${{ github.event.client_payload.sha }} \
+            -d "{
+              \"state\": \"${STATUS}\",
+              \"context\": \"Cloudemy Smoke Tests\",
+              \"description\": \"Smoke test result from automation repo\"
+            }"

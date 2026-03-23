@@ -18,8 +18,8 @@ test.describe('@competency Create Competency Module', () => {
     await expect(page).toHaveURL(/competencies\/create/);
     return { dashboardPage };
   }
-  //smoke test to create a clustered competency with two existing competencies, upload learning material and scorm material, save, and verify in competency list
-  test('@smoke Create a clustered competency with two existing competencies', async ({ page }) => {
+  
+  test('@regression Create a clustered competency with two existing competencies', async ({ page }) => {
     const { dashboardPage } = await openCreateCompetencyForm(page);
     const filePath1 = path.join(process.cwd(),config.createCompetencyData.folder,config.createCompetencyData.learningMaterial);
     const filePath2 = path.join(process.cwd(),config.createCompetencyData.folder,config.createCompetencyData.scormMaterial);

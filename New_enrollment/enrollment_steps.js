@@ -4,33 +4,26 @@ const { expect } = require('@playwright/test');
 function generatePersonalFiller(personalData) {
   return async function (page) {
     await page.getByRole('textbox', { name: 'First Name/Given Names *' }).waitFor({ timeout: 10000 });
-
     await page.getByRole('combobox', { name: 'Title *' }).selectOption(personalData.title); // e.g., "Mr"
     await page.getByRole('textbox', { name: 'First Name/Given Names *' }).fill(personalData.firstName);
     await page.getByRole('textbox', { name: 'Middle Name' }).fill(personalData.middleName || '');
     await page.getByRole('textbox', { name: 'Surname/Last Name *' }).fill(personalData.lastName);
     await page.getByRole('textbox', { name: 'Date of Birth *' }).fill(personalData.dob);
-      await page.getByText(personalData.gender).click();
+    await page.getByText(personalData.gender).click();
     await page.getByRole('textbox', { name: 'Mobile Phone *' }).fill(personalData.phone);
-    await page.getByRole('textbox', { name: 'Email *' }).fill(personalData.email);
+    await page.getByRole('textbox', { name: /^Email\b/i }).fill(personalData.email);
+    await page.getByRole('textbox', { name: /^Confirm Email\b/i }).fill(personalData.email);
     await page.getByRole('textbox', { name: 'Username *' }).fill(personalData.username);
-    
     await page.getByLabel(personalData.gender).check(); // 'Female', 'Male', or 'Other'
-     await page.getByRole('button', { name: 'Next' }).click();
-
-    // Optional: Upload photo
-    // await page.setInputFiles('input[type="file"]', personalData.photoPath);
+    await page.getByRole('button', { name: 'Next' }).click();
+    await page.setInputFiles('#fileStudentPhotoUpload', config.documents.photo);
   };
 }
-
-
-
 const fillPersonalDetails1 = generatePersonalFiller(config.personal1);
 const fillPersonalDetails2 = generatePersonalFiller(config.personal2);
 const fillPersonalDetails3 = generatePersonalFiller(config.personal3);
 const fillPersonalDetails4 = generatePersonalFiller(config.personal4);
 const fillPersonalDetails5 = generatePersonalFiller(config.personal5);
-
 async function fillResidentialDetails(page) {
   const { residential } = config;
   await page.waitForTimeout(10000);
@@ -97,12 +90,15 @@ async function fillPreCourseEvaluation(page) {
   await page.getByText('Attending school? Yes No School Name * Highest Completed School Level Completed').click();
   await page.locator('#Step5').getByText('Not Specified', { exact: true }).nth(2).click();
   await page.locator('.txtPriorEducationFlag > .iradio_flat-red > .iCheck-helper').first().click();
-  await page.getByRole('listitem').filter({ hasText: /^$/ }).click();
-  //await page.getByRole('searchbox', { name: 'Are you currently enroled in' }).fill('');
-  //await page.getByRole('option', { name: 'Bachelor Degree or Higher' }).click();
-  await page.locator('div:nth-child(12) > .col-md-12 > div > label > .iradio_flat-red > .iCheck-helper').first().click();
-  await page.locator('div:nth-child(13) > .col-md-12 > div > label > .iradio_flat-red > .iCheck-helper').first().click();
-  await page.locator('div:nth-child(15) > .col-md-12 > div > label > .iradio_flat-red > .iCheck-helper').first().click();
+  await page.locator('#txtCurrentlyEnrolled').locator('xpath=following-sibling::span') .click();
+  await page.keyboard.press('ArrowDown');
+  await page.keyboard.press('Enter');
+  await page.locator('//label[contains(.,"Have you previously completed a qualification funded under the JobTrainer Fund?")]/following-sibling::div//label[.//text()[contains(.,"No")]]').click();
+  await page.locator('input[name="txtJobSeeker"][value="1"]').locator('xpath=ancestor::label').click();
+  await page.locator('input[name="txtJobEvidenceType[]"][value="1"]').locator('xpath=ancestor::label').click();
+  await page.setInputFiles('#fileEvidenceTrainerFund',config.documents.concessionCard);
+  await page.locator('input[name="txtSchoolLeaver"][value="1"]').locator('xpath=ancestor::label').click();
+  await page.selectOption('#txtReason', {label: 'To get a job (01)'});
   await page.getByRole('button', { name: 'Next' }).click();
 }
 async function rpl(page) {
@@ -165,11 +161,11 @@ async function completePayment_paid(page) {
   await page.locator('label').filter({ hasText: 'In person' }).getByRole('insertion').click();
   await page.getByRole('textbox', { name: 'Payment date *' }).click();
   await page.getByRole('link', { name: String(new Date().getDate()), exact: true }).click();
-  await page.getByRole('button', { name: 'Submit' }).click();
+  await page.locator('#btnSave').click({ noWaitAfter: true });
 }
 async function completePayment_unpaid(page) {
   await page.locator('label').filter({ hasText: 'Pay Later' }).getByRole('insertion').click();
-  await page.getByRole('button', { name: 'Submit' }).click();
+  await page.locator('#btnSave').click({ noWaitAfter: true });
 }
 
 module.exports = {

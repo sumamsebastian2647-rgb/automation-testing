@@ -26,16 +26,16 @@ const generateUsers = (count = 5) => {
 };
 
 const config = {
- /* credentials: {
+credentials: {
     baseUrl: 'https://rto2503.cloudemy.au/site/login',
     username: 'rto2503',
     password: 'Rto@2024$',
-  },*/
-  credentials: {
+  },
+  /*  credentials: {
     baseUrl: 'https://rto2503.cloudemy.app/site/login',
     username: 'rto2503',
     password: 'MasterAdmin@2024$'
-  },
+  },*/
   courses: {
     first: /Veterinary Nursing/i,
     second: /Business/i,
@@ -74,7 +74,7 @@ const config = {
     contactEmail: 'testcontact@gmail.com',
     contactPhone: '222222222',
   },
-  /*courselist: {
+  courselist: {
     course1: 'Certificate II in Computer Assembly and Repair',
     course2: 'Certificate I in Conservation and Ecosystem Management',
     course3: 'Certificate III in Sports Turf Management',
@@ -97,9 +97,9 @@ const config = {
     manualacceptancelink2_existing: 'https://rto2503.cloudemy.au/forms?u=f35c8aa8',
     autoacceptancelink1_existing: 'https://rto2503.cloudemy.au/forms?u=42681ad6',
     autoacceptancelink2_existing: 'https://rto2503.cloudemy.au/forms?u=9df7ab23',
-  },*/
+  },
     //production course list and link
-  courselist: {
+ /* courselist: {
     course1: 'Course in Retrofitting for Energy and Water Efficiency',
     course2: 'Certificate IV in Training and Assessment',
     course3: 'Certificate IV in Dance',
@@ -122,7 +122,7 @@ const config = {
     manualacceptancelink2_existing: 'https://rto2503.cloudemy.app/forms?u=e7ed693d',
     autoacceptancelink1_existing: 'https://rto2503.cloudemy.app/forms?u=b0922978',
     autoacceptancelink2_existing: 'https://rto2503.cloudemy.app/forms?u=c00c020e',
-  },
+  },*/
   preCourseEval: {
     countryOfBirth: 'Australia',
     cityOfBirth: 'testcity',

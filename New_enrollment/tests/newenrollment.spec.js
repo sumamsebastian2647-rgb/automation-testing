@@ -116,8 +116,8 @@ for (const data of testData) {
       await uploadDocuments(page);
       await fillDeclarationAndSignature(page);
       await data.paymentFunction(page);
-
-      await page.reload();
+      await page.waitForTimeout(1000);
+      //await page.reload();
       await loginAsAdmin(page);
       await data.verifyFunction(page, data.course);
       await logoutAsAdmin(page);

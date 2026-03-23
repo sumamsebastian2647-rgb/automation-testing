@@ -1,0 +1,60 @@
+{
+  "AUTO_DOM_093354": {
+    "residential": [
+      {
+        "formSection": "residential_information",
+        "fieldName": "field_name_1767870684818_606",
+        "fieldLabel": "field_label_1767870684819_400",
+        "fieldType": "text"
+      },
+      {
+        "formSection": "residential_information",
+        "fieldName": "field_name_1767870689029_802",
+        "fieldLabel": "field_label_1767870689029_245",
+        "fieldType": "textarea"
+      },
+      {
+        "formSection": "residential_information",
+        "fieldName": "field_name_1767870692604_316",
+        "fieldLabel": "field_label_1767870692604_709",
+        "fieldType": "number"
+      },
+      {
+        "formSection": "residential_information",
+        "fieldName": "field_name_1767870696167_937",
+        "fieldLabel": "field_label_1767870696167_953",
+        "fieldType": "email"
+      },
+      {
+        "formSection": "residential_information",
+        "fieldName": "field_name_1767870699774_288",
+        "fieldLabel": "field_label_1767870699774_810",
+        "fieldType": "date"
+      },
+      {
+        "formSection": "residential_information",
+        "fieldName": "field_name_1767870703561_51",
+        "fieldLabel": "field_label_1767870703561_169",
+        "fieldType": "dropdown"
+      },
+      {
+        "formSection": "residential_information",
+        "fieldName": "field_name_1767870707561_155",
+        "fieldLabel": "field_label_1767870707561_21",
+        "fieldType": "radio"
+      },
+      {
+        "formSection": "residential_information",
+        "fieldName": "field_name_1767870711610_9",
+        "fieldLabel": "field_label_1767870711610_741",
+        "fieldType": "checkbox"
+      },
+      {
+        "formSection": "residential_information",
+        "fieldName": "field_name_1767870715618_816",
+        "fieldLabel": "field_label_1767870715618_3",
+        "fieldType": "file"
+      }
+    ]
+  }
+}

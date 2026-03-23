@@ -16,8 +16,8 @@ test.describe('@course @clone Clone Course Module', () => {
     await dashboardPage.openFirstCourseForCloneFromList();
     return { dashboardPage };
   }
-  //clone course, verify copy suffix, save, and verify in list
-  test('@smoke clone first course, verify copy suffix, save, and verify in list', async ({ page }) => {
+
+  test('@regression clone first course, verify copy suffix, save, and verify in list', async ({ page }) => {
     const { dashboardPage } = await openCloneCourseForm(page);
     const clonedCode = await page.locator('#course-c_code').inputValue();
     const clonedName = await page.locator('#course-c_name').inputValue();

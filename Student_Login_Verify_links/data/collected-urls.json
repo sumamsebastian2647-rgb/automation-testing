@@ -1,0 +1,223 @@
+[
+  {
+    "url": "/student/courses",
+    "title": "AJAX Navigation",
+    "timestamp": "2026-01-20T06:09:21.144Z",
+    "pathname": "/student/courses",
+    "search": "",
+    "type": "ajax"
+  },
+  {
+    "url": "/student/my-certificates",
+    "title": "AJAX Navigation",
+    "timestamp": "2026-01-20T06:09:29.573Z",
+    "pathname": "/student/my-certificates",
+    "search": "",
+    "type": "ajax"
+  },
+  {
+    "url": "/user/editprofile",
+    "title": "Edit Profile",
+    "timestamp": "2026-01-20T00:00:00.000Z",
+    "pathname": "/user/editprofile",
+    "search": ""
+  },
+  {
+    "url": "/student/course?id=435",
+    "title": "AJAX Navigation",
+    "timestamp": "2026-01-20T06:09:44.591Z",
+    "pathname": "/student/course",
+    "search": "?id=435",
+    "type": "ajax"
+  },
+  {
+    "url": "/student/settings",
+    "title": "AJAX Navigation",
+    "timestamp": "2026-01-20T06:09:56.186Z",
+    "pathname": "/student/settings",
+    "search": "",
+    "type": "ajax"
+  },
+  {
+    "url": "/notifications/default/index",
+    "title": "Notifications",
+    "timestamp": "2026-01-20T06:10:01.668Z",
+    "pathname": "/notifications/default/index",
+    "search": ""
+  },
+  {
+    "url": "/student/competencies?id=464",
+    "title": "AJAX Navigation",
+    "timestamp": "2026-01-20T06:10:25.194Z",
+    "pathname": "/student/competencies",
+    "search": "?id=464",
+    "type": "ajax"
+  },
+  {
+    "url": "/records-of-participation/?cid=464",
+    "title": "Records of Participation for Sherry Jose",
+    "timestamp": "2026-01-20T06:10:46.342Z",
+    "pathname": "/records-of-participation/",
+    "search": "?cid=464"
+  },
+  {
+    "url": "/student/class?id=464",
+    "title": "AJAX Navigation",
+    "timestamp": "2026-01-20T06:10:51.938Z",
+    "pathname": "/student/class",
+    "search": "?id=464",
+    "type": "ajax"
+  },
+  {
+    "url": "/student/forum?id=464",
+    "title": "AJAX Navigation",
+    "timestamp": "2026-01-20T06:11:08.648Z",
+    "pathname": "/student/forum",
+    "search": "?id=464",
+    "type": "ajax"
+  },
+  {
+    "url": "/documents/student-documents?id=11176&cid=464",
+    "title": "Document for Sherry jose",
+    "timestamp": "2026-01-20T06:11:16.500Z",
+    "pathname": "/documents/student-documents",
+    "search": "?id=11176&cid=464"
+  },
+  {
+    "url": "/student/assessorinfo?id=464",
+    "title": "AJAX Navigation",
+    "timestamp": "2026-01-20T06:11:24.866Z",
+    "pathname": "/student/assessorinfo",
+    "search": "?id=464",
+    "type": "ajax"
+  },
+  {
+    "url": "/messenger/chatting-student?id=464",
+    "title": "Messenger",
+    "timestamp": "2026-01-20T06:11:34.425Z",
+    "pathname": "/messenger/chatting-student",
+    "search": "?id=464"
+  },
+  {
+    "url": "/student/course?id=464",
+    "title": "AJAX Navigation",
+    "timestamp": "2026-01-20T06:11:39.430Z",
+    "pathname": "/student/course",
+    "search": "?id=464",
+    "type": "ajax"
+  },
+  {
+    "url": "/student-induction/index?courseId=464",
+    "title": "Course Induction: MTA057 Produce anodised film on aluminium alloy components",
+    "timestamp": "2026-01-20T06:11:45.229Z",
+    "pathname": "/student-induction/index",
+    "search": "?courseId=464"
+  },
+  {
+    "url": "/rpl-assessment/student-rpl-assessment?cid=464",
+    "title": "RPL Assessment",
+    "timestamp": "2026-01-20T06:11:48.677Z",
+    "pathname": "/rpl-assessment/student-rpl-assessment",
+    "search": "?cid=464"
+  },
+  {
+    "url": "/records-of-participation/index?cid=464",
+    "title": "Records of Participation for Sherry Jose",
+    "timestamp": "2026-01-20T06:11:55.160Z",
+    "pathname": "/records-of-participation/index",
+    "search": "?cid=464"
+  },
+  {
+    "url": "/documents/student-documents?cid=464&id=11176",
+    "title": "Document for Sherry jose",
+    "timestamp": "2026-01-20T06:11:56.872Z",
+    "pathname": "/documents/student-documents",
+    "search": "?cid=464&id=11176"
+  },
+  {
+    "url": "/student/competencies?id=464&is_comp=1&context=comp-assess&comp_id=1924",
+    "title": "AJAX Navigation",
+    "timestamp": "2026-01-20T06:12:11.843Z",
+    "pathname": "/student/competencies",
+    "search": "?id=464&is_comp=1&context=comp-assess&comp_id=1924",
+    "type": "ajax"
+  },
+  {
+    "url": "/student/journey-log?lm_id=2017&course_id=464&competency_id=1924",
+    "title": "AJAX Navigation",
+    "timestamp": "2026-01-20T06:12:15.254Z",
+    "pathname": "/student/journey-log",
+    "search": "?lm_id=2017&course_id=464&competency_id=1924",
+    "type": "ajax"
+  },
+  {
+    "url": "/student",
+    "title": "Sherry Jose",
+    "timestamp": "2026-01-20T06:12:27.191Z",
+    "pathname": "/student",
+    "search": ""
+  },
+  {
+    "url": "/student/get-weekly-insights?course_id=588",
+    "title": "AJAX Navigation",
+    "timestamp": "2026-01-20T06:12:27.891Z",
+    "pathname": "/student/get-weekly-insights",
+    "search": "?course_id=588",
+    "type": "ajax"
+  },
+  {
+    "url": "/student/get-weekly-insights?course_id=420",
+    "title": "AJAX Navigation",
+    "timestamp": "2026-01-20T06:12:30.458Z",
+    "pathname": "/student/get-weekly-insights",
+    "search": "?course_id=420",
+    "type": "ajax"
+  },
+  {
+    "url": "/messenger/chatting-student?id=420",
+    "title": "Messenger",
+    "timestamp": "2026-01-20T06:12:40.270Z",
+    "pathname": "/messenger/chatting-student",
+    "search": "?id=420"
+  },
+  {
+    "url": "/student/forum?id=588",
+    "title": "AJAX Navigation",
+    "timestamp": "2026-01-20T06:12:46.392Z",
+    "pathname": "/student/forum",
+    "search": "?id=588",
+    "type": "ajax"
+  },
+  {
+    "url": "/student/assessorinfo?id=588",
+    "title": "AJAX Navigation",
+    "timestamp": "2026-01-20T06:12:54.780Z",
+    "pathname": "/student/assessorinfo",
+    "search": "?id=588",
+    "type": "ajax"
+  },
+  {
+    "url": "/student/competencies?id=588",
+    "title": "AJAX Navigation",
+    "timestamp": "2026-01-20T06:13:00.230Z",
+    "pathname": "/student/competencies",
+    "search": "?id=588",
+    "type": "ajax"
+  },
+  {
+    "url": "/site/check-status",
+    "title": "AJAX Navigation",
+    "timestamp": "2026-02-03T09:27:04.389Z",
+    "pathname": "/site/check-status",
+    "search": "",
+    "type": "ajax"
+  },
+  {
+    "url": "/student/get-weekly-insights?course_id=555",
+    "title": "AJAX Navigation",
+    "timestamp": "2026-02-03T09:51:48.913Z",
+    "pathname": "/student/get-weekly-insights",
+    "search": "?course_id=555",
+    "type": "ajax"
+  }
+]

@@ -17,11 +17,7 @@ test.describe('@course Edit Course Module', () => {
 
     return { dashboardPage };
   }
-
-  // =========================
-  // 🔥 SMOKE TEST
-  // =========================
-  test('@smoke edit first course successfully with basic update flow', async ({ page }) => {
+  test('@regression edit first course successfully with basic update flow', async ({ page }) => {
 
     const { dashboardPage } = await openEditCourseForm(page);
     const originalCode = await page.locator('#course-c_code').inputValue();
