@@ -8,17 +8,14 @@ test.describe('@competency Create Competency Module', () => {
   async function openCreateCompetencyForm(page) {
     const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
-
     await page.goto(config.credentials.baseURL);
     await loginPage.login(
       config.credentials.username,
       config.credentials.password
     );
-
     await dashboardPage.navigateToCompetencyList();
     await dashboardPage.clickCreateCompetency();
     await expect(page).toHaveURL(/competencies\/create/);
-
     return { dashboardPage };
   }
 
@@ -41,14 +38,11 @@ test.describe('@competency Create Competency Module', () => {
     await dashboardPage.selectDeliveryModeAVETMISS(config.createCompetencyData.deliveryModeAVETMISS);
     await dashboardPage.selectPredominantDeliveryMode(config.createCompetencyData.predominantDeliveryMode);
     await dashboardPage.selectFundingSourceNational('11');
-
     const selectedOption = await dashboardPage.fundingSourceNationalDropdown.evaluate((selectEl) => {
       return selectEl.options[selectEl.selectedIndex].textContent?.trim();
     });
-
     await expect(selectedOption).toBe('11 - Commonwealth and state general purpose recurrent');
     console.log(`✅ Funding Source National selected: ${selectedOption}`);
-
     await dashboardPage.fillNominalHours(config.createCompetencyData.nominalhr);
     await dashboardPage.fillScheduledHours(config.createCompetencyData.scheduledhr);
     await dashboardPage.fillDeliveryProviderABN(config.createCompetencyData.DeliveryProviderABN);
@@ -58,20 +52,15 @@ test.describe('@competency Create Competency Module', () => {
     await dashboardPage.fillEmployerContributionAmount(config.createCompetencyData.EmployerContributionAmount);
     await dashboardPage.addRplChecklist('Test Checklist 1');
     await dashboardPage.saveCompetencyAndVerifySuccessToast();
-
     await expect(page).toHaveURL(/competencies\/(index|update\?id=\d+|view\?id=\d+)/);
-
     if (/\/competencies\/(create|update\?id=\d+|view\?id=\d+)/.test(page.url())) {
       await expect(page.locator('#competencies-comp_code')).toHaveValue(uniqueCompetencyCode);
       await expect(page.locator('#competencies-comp_name')).toHaveValue(uniqueCompetencyName);
     }
-
     console.log(`Created Competency Code: ${uniqueCompetencyCode}`);
     console.log(`Created Competency Name: ${uniqueCompetencyName}`);
-
     await dashboardPage.navigateToCompetencyList();
     await dashboardPage.searchCompetencyInList(uniqueCompetencyCode, uniqueCompetencyName);
-
     const results = page.locator('table tbody tr');
     await expect(results.first()).toContainText(uniqueCompetencyCode);
     await expect(results.first()).toContainText(uniqueCompetencyName);
@@ -80,10 +69,8 @@ test.describe('@competency Create Competency Module', () => {
   test('@regression Cannot create competency without code', async ({ page }) => {
     const { dashboardPage } = await openCreateCompetencyForm(page);
     const uniqueCompetencyName = config.createCompetencyData.getUniqueCompetencyName();
-
     await dashboardPage.fillCreateCompetencyName(uniqueCompetencyName);
     await dashboardPage.clickSaveCompetency();
-
     await expect(page).toHaveURL(/competencies\/create/);
     await expect(page.locator('.field-competencies-comp_code .help-block.help-block-error'))
       .toHaveText('Code cannot be blank.');
@@ -92,10 +79,8 @@ test.describe('@competency Create Competency Module', () => {
   test('@regression Cannot create competency without name', async ({ page }) => {
     const { dashboardPage } = await openCreateCompetencyForm(page);
     const uniqueCompetencyCode = config.createCompetencyData.getUniqueCompetencyCode();
-
     await dashboardPage.fillCreateCompetencyCode(uniqueCompetencyCode);
     await dashboardPage.clickSaveCompetency();
-
     await expect(page).toHaveURL(/competencies\/create/);
     const nameError = page.locator('.field-competencies-comp_name .help-block.help-block-error');
     const summaryError = page.locator('div.bg-danger li');

@@ -5,6 +5,15 @@ module.exports = {
     username: 'Rto2503',
     password: 'Rto@2024$',
   },
+   /*credentials: {
+    baseURL: 'https://rto2503.cloudemy.app/site/login',
+    username: 'Rto2503',
+    password: 'MasterAdmin@2024$',
+  },*/
+  studentlogin:{
+    studentUsername: 'sanoj123',
+    studentPassword: 'NGH3ZpTf',
+  },
   // Create Course form test data
   createCourseData: {
     // Validation-safe unique code (<=10 chars for AVETMISS code field)
@@ -124,7 +133,13 @@ Following safety protocols improves productivity and ensures compliance with wor
         answer: "Drag Item"
       }
     }
-  }
+  },
+  assessor_info:{
+    coursename:'Assessor_instruction',
+    competency:'COMP A',
+
+  },
+
 
 };
  
