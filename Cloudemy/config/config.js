@@ -14,6 +14,11 @@ module.exports = {
     studentUsername: 'sanoj123',
     studentPassword: 'NGH3ZpTf',
   },
+  courseCategory: {
+    baseName: 'AutoCat', // ✅ Base name used for dynamic generation
+    duplicate:'Nurse',
+    inactive:'Children Services',
+  },
   // Create Course form test data
   createCourseData: {
     // Validation-safe unique code (<=10 chars for AVETMISS code field)
